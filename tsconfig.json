@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "allowJs": true,
+    "module": "ESNext",
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es5", "es2015", "es2020", "es2016", "esnext", "dom"],
+    // "outDir": "dist/esm",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "types": ["vitest", "vitest/globals", "vite/client"],
+    "preserveValueImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./components.d.ts"],
+  "exclude": ["node_modules"],
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
