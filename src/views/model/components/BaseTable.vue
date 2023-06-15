@@ -10,7 +10,7 @@
           {{ item.title }}
         </li>
       </ul>
-      <div class="base-table-body">
+      <div v-autoscroll="20" class="base-table-body">
         <ul v-for="(row, index1) in dataSource" :key="index1" class="base-table-body-row">
           <li
             v-for="(column, index2) in row"

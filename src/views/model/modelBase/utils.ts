@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2023-05-31 15:06:14
  * @LastEditors: taoman
- * @LastEditTime: 2023-06-06 16:36:31
+ * @LastEditTime: 2023-06-09 17:14:08
  */
 import { onMounted, ref, shallowRef } from 'vue'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -73,7 +73,6 @@ export function useThree() {
     const action = mixer.clipAction(clip)
     action.play()
     mixers.push(mixer)
-    console.log('mixers',mixers[0].time)
 
     return undefined
   }

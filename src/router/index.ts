@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import LayoutRoot from '@/views/layout/LayoutRoot.vue'
 import { skuCenter } from './sku'
+import { componentsCenter } from './components'
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -35,7 +36,8 @@ export const routes: RouteRecordRaw[] = [
           title: '模型'
         }
       },
-      ...skuCenter
+      ...skuCenter,
+      ...componentsCenter
     ]
   },
   {

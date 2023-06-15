@@ -6,11 +6,16 @@ import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 import ViteImages from 'vite-plugin-vue-images'
+import {viteMockServe} from 'vite-plugin-mock'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     VueSetupExtend(),
+    viteMockServe({
+      mockPath:'/src/common/http/mock',
+      localEnabled:true
+    }),
     Components({
       resolvers: [AntDesignVueResolver()]
     }),

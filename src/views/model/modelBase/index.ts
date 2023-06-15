@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2023-05-31 14:31:33
  * @LastEditors: taoman
- * @LastEditTime: 2023-06-09 14:58:03
+ * @LastEditTime: 2023-06-09 17:14:31
  */
 import * as THREE from 'three'
 import { onMounted, ref, shallowRef } from 'vue'
@@ -86,7 +86,6 @@ export function useTurbine() {
       if(clippingPlane.constant <= -0.1){
         modelSkeleton.value?.remove(shellModel!)
         renderMixins.delete(uid)
-        console.log('renderMixins', renderMixins)
       }
       clippingPlane.constant -= 0.01
     })

@@ -53,7 +53,6 @@ export const appModelStore = defineStore('app-model-stroe', () => {
   }
   const validModules = computed(()=>{
     const list = sortBy(filter(modelModules.value, 'visible'), 'updateTime')
-    console.log('list', list)
     return map(list,'key')
   })
   const chunkModules = computed(() => ({

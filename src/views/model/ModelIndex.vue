@@ -20,7 +20,6 @@ import { appModelStore } from '@/stores/model-stores'
 import Witgets from './witgets'
 import { storeToRefs } from 'pinia'
 const { chunkModules } = storeToRefs(appModelStore())
-console.log('chunkModules', chunkModules)
 const { container, statsRef } = useTurbine()
 </script>
 
