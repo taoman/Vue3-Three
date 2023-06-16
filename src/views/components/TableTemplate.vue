@@ -2,15 +2,15 @@
   <div>
     <app-search v-model="state.formState" @search="onSearch" @reset="onReset">
       <template #formConent="{ modelRef }">
-          <a-form-item label="用户名">
-            <a-input v-model:value="modelRef.name" placeholder="请输入用户名" />
-          </a-form-item>
-          <a-form-item label="品牌">
-            <app-select v-model:value="modelRef.brand" type="brand" placeholder="请选择品牌" />
-          </a-form-item>
-          <a-form-item label="门店">
-            <app-select v-model:value="modelRef.store" type="store" placeholder="请选择门店" />
-          </a-form-item>
+        <a-form-item label="用户名">
+          <a-input v-model:value="modelRef.name" placeholder="请输入用户名" />
+        </a-form-item>
+        <a-form-item label="品牌">
+          <app-select v-model:value="modelRef.brand" type="brand" placeholder="请选择品牌" />
+        </a-form-item>
+        <a-form-item label="门店">
+          <app-select v-model:value="modelRef.store" type="store" placeholder="请选择门店" />
+        </a-form-item>
         <a-form-item label="日期">
           <a-range-picker
             style="width: 250px"
@@ -51,9 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import dayjs, { Dayjs } from 'dayjs'
+import axios from 'axios'
+import {getTableData} from '@/api/table'
 type Key = string | number
 type RangeValue = [Dayjs, Dayjs]
 interface DataType {
@@ -70,7 +72,7 @@ interface FormState {
   brand: string
   status: string
   store: string
-  date?: [Dayjs, Dayjs];
+  date?: [Dayjs, Dayjs]
 }
 const ranges = {
   今天: [dayjs(), dayjs()] as RangeValue,
@@ -141,7 +143,7 @@ const onSearch = () => {
     startDate = date[0].format('YYYY-MM-DD')
     endDate = date[1].format('YYYY-MM-DD')
   }
-  console.log('search', startDate,endDate)
+  console.log('search', startDate, endDate)
 }
 const onReset = () => {
   console.log('onReset')
@@ -152,6 +154,17 @@ const edit = (record: DataType) => {
 const del = (record: DataType) => {
   console.log('record', record)
 }
+onMounted(async () => {
+  const data = {
+    page: 1,
+    pageSize: 10
+  }
+  axios.get('/api/table/list',{data}).then((res) => {
+    console.log('res', res)
+  })
+  // const res = await getTableData(data)
+  // console.log('res', res)
+})
 </script>
 
 <style lang="scss" scoped></style>

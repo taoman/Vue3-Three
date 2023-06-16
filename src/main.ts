@@ -8,6 +8,8 @@ import 'ant-design-vue/dist/antd.css'
 
 import './assets/main.css'
 import autoscrollDirective from './common/directives/autoscroll'
+import '@/common/http/mock'
+
 const app = createApp(App)
 
 app.use(createPinia())
