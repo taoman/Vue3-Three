@@ -10,7 +10,7 @@
     </a-sub-menu>
   </template>
   <template v-else>
-    <a-menu-item :key="menuInfo.path" @click="toPage(menuInfo)">
+    <a-menu-item :key="menuInfo.path" @click="toPage(menuInfo.path)">
       <template #icon>
         <MailOutlined />
       </template>
@@ -20,17 +20,20 @@
 </template>
 
 <script setup lang="ts">
-import { RouteRecordRaw, useRouter } from 'vue-router'
+import { RouteRecordRaw, useRoute,useRouter } from 'vue-router'
 import { MailOutlined } from '@ant-design/icons-vue'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
+const route = useRoute()
 const router = useRouter()
 const props = defineProps<{ menuInfo: RouteRecordRaw }>()
 const children = computed(() => {
   return props.menuInfo?.children?.filter((item) => !item.meta?.hidden) ?? []
 })
-const toPage = (e: RouteRecordRaw) => {
-  router.push(e.path)
+const toPage = (e: string) => {
+  router.push(e)
 }
+
+
 </script>
 
 <style lang="scss" scoped></style>

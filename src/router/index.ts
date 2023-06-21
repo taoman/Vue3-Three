@@ -36,7 +36,7 @@ export const routes: RouteRecordRaw[] = [
           title: '模型'
         }
       },
-      ...skuCenter,
+      // ...skuCenter,
       ...componentsCenter
     ]
   },

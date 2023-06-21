@@ -2,14 +2,14 @@
   <div>
     <app-search v-model="state.formState" @search="onSearch" @reset="onReset">
       <template #formConent="{ modelRef }">
-        <a-form-item label="用户名">
-          <a-input v-model:value="modelRef.name" placeholder="请输入用户名" />
+        <a-form-item label="负责人">
+          <a-input v-model:value="modelRef.name" placeholder="请输入负责人" />
         </a-form-item>
-        <a-form-item label="品牌">
-          <app-select v-model:value="modelRef.brand" type="brand" placeholder="请选择品牌" />
+        <a-form-item label="风机">
+          <app-select v-model:value="modelRef.brand" type="brand" placeholder="请选择风机" />
         </a-form-item>
-        <a-form-item label="门店">
-          <app-select v-model:value="modelRef.store" type="store" placeholder="请选择门店" />
+        <a-form-item label="部件">
+          <app-select v-model:value="modelRef.store" type="store" placeholder="请选择部件" />
         </a-form-item>
         <a-form-item label="日期">
           <a-range-picker
@@ -25,7 +25,10 @@
       :row-key="(record) => record.key"
       :row-selection="{ selectedRowKeys: state.selectedRowKeys, onChange: onSelectChange }"
       :columns="columns"
-      :data-source="data"
+      :pagination="pagination"
+      :data-source="dataSource"
+      :scroll="{ y: 600 }"
+      @change="handleTableChange"
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'status'">
@@ -47,19 +50,22 @@
         </template>
       </template>
     </a-table>
+    <app-modal v-model:modalVisible="modalVisible" :confirmLoading="confirmLoading" @ok="handleOk"  @cancel="handleCancel">
+    11
+    </app-modal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import dayjs, { Dayjs } from 'dayjs'
-import axios from 'axios'
-import {getTableData} from '@/api/table'
+import { usePagination } from 'vue-request'
+import { getTableData } from '@/api/table'
 type Key = string | number
 type RangeValue = [Dayjs, Dayjs]
 interface DataType {
-  key: Key
+  id: number
   name: string
   brand: string
   status: string
@@ -80,7 +86,7 @@ const ranges = {
 }
 const columns = [
   {
-    title: '用户名',
+    title: '负责人',
     dataIndex: 'name'
   },
   {
@@ -104,17 +110,11 @@ const columns = [
     dataIndex: 'operation'
   }
 ]
-const data: DataType[] = []
-for (let i = 0; i < 41; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    brand: 'nike',
-    status: '成功',
-    date: '2023-1-1',
-    store: `London, Park Lane no. ${i}`
-  })
-}
+const dataSource = ref<DataType[]>()
+const total = ref()
+const current = ref(1)
+const pageSize = ref(10)
+const modalVisible = ref(false)
 const state = reactive<{
   selectedRowKeys: Key[]
   formState: FormState
@@ -149,21 +149,55 @@ const onReset = () => {
   console.log('onReset')
 }
 const edit = (record: DataType) => {
-  console.log('record', record)
+  // console.log('record', record)
+  modalVisible.value = true
 }
 const del = (record: DataType) => {
   console.log('record', record)
 }
-onMounted(async () => {
+const getData = async () => {
   const data = {
-    page: 1,
-    pageSize: 10
+    page: current.value,
+    pageSize: pageSize.value
   }
-  axios.get('/api/table/list',{data}).then((res) => {
-    console.log('res', res)
-  })
-  // const res = await getTableData(data)
-  // console.log('res', res)
+
+  const res = await getTableData({ data } as any)
+  dataSource.value = res.data.list
+  total.value = res.data.total
+  current.value = res.data.page
+  pageSize.value = res.data.pageSize
+}
+const pagination = computed(() => {
+  return {
+    current: current.value,
+    pageSize: pageSize.value,
+    total: total.value,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total: number) => `共 ${total} 条`
+  }
+})
+const handleTableChange = (pag: any) => {
+  current.value = pag.current
+  pageSize.value = pag.pageSize
+  getData()
+}
+const confirmLoading = ref(false)
+const handleOk = () => {
+  confirmLoading.value = true
+  setTimeout(() => {
+    modalVisible.value = false
+    confirmLoading.value = false
+  }, 2000)
+}
+const handleCancel = () => {
+  modalVisible.value = false
+}
+onMounted(async () => {
+  // axios.get('/api/table/list',{data}).then((res) => {
+  //   console.log('res', res)
+  // })
+  getData()
 })
 </script>
 

@@ -1,4 +1,4 @@
-import {mockBase} from './index'
+import {mockBaseGet} from './index'
 import {MockResponseTableData} from '@/interface/table'
 const data:MockResponseTableData[] = []
 for(let i = 0;i<50;i++){
@@ -12,5 +12,5 @@ for(let i = 0;i<50;i++){
   })
 }
 export function mockTableList(){
-  return mockBase<MockResponseTableData[]>('/api/table/list',data)
+  return mockBaseGet<MockResponseTableData[]>('/api/table/list',data)
 }

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance,AxiosResponse,InternalAxiosRequestConfig } from 'axios'
 
-class AxiosWrapper {
+class AxiosMockWrapper {
   private instance: AxiosInstance
   constructor(baseUrl: string) {
     this.instance = axios.create({
@@ -25,7 +25,7 @@ class AxiosWrapper {
     )
   }
   public async get<T>(url: string, params?: any): Promise<T> {
-    const res:AxiosResponse<T> = await this.instance.get(url, { params })
+    const res:AxiosResponse<T> = await this.instance.get(url,  params )
     return res.data
   }
   public async post<T>(url: string, data?: any): Promise<T> {
@@ -33,6 +33,6 @@ class AxiosWrapper {
     return res.data
   }
 }
-const axiosWrapper = new AxiosWrapper('/api')
+const axiosMockWrapper = new AxiosMockWrapper('/api')
 
-export default axiosWrapper
+export default axiosMockWrapper

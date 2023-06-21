@@ -6,3 +6,4 @@ export interface MockResponseTableData {
   status:string
   date:string
 }
+

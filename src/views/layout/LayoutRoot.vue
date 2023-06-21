@@ -15,6 +15,7 @@
         <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
         <app-bread-crumb />
       </a-layout-header>
+      <app-tags />
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
@@ -39,6 +40,7 @@ const collapsed = ref<boolean>(false)
     padding: 0;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #ccc;
   }
   .trigger {
     font-size: 18px;

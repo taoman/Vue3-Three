@@ -26,9 +26,8 @@
 
 import Mock from 'mockjs';
 import {mockTableList} from './table'
-export function mockBase<T extends any[]>(url:string,data:T){
+export function mockBaseGet<T extends any[]>(url:string,data:T){
   return Mock.mock(url,'get',(params) => {
-    console.log('params',params)
     const {page,pageSize} = JSON.parse(params.body)
     const start = (page - 1) * pageSize
     const end = page * pageSize
