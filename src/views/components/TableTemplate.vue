@@ -1,15 +1,15 @@
 <template>
   <div>
-    <app-search v-model="state.formState" @search="onSearch" @reset="onReset">
-      <template #formConent="{ modelRef }">
+    <app-search v-model="state.formState" :rules="state.rulesState" @search="onSearch" @reset="onReset">
+      <template #formConent="{ modelRef,validateInfos }">
         <a-form-item label="负责人">
           <a-input v-model:value="modelRef.name" placeholder="请输入负责人" />
         </a-form-item>
-        <a-form-item label="风机">
-          <app-select v-model:value="modelRef.brand" type="brand" placeholder="请选择风机" />
+        <a-form-item label="风机" v-bind="validateInfos.turbines">
+          <app-select v-model:value="modelRef.turbines"  type="turbines" placeholder="请选择风机" />
         </a-form-item>
-        <a-form-item label="部件">
-          <app-select v-model:value="modelRef.store" type="store" placeholder="请选择部件" />
+        <a-form-item label="部件" v-bind="validateInfos.witgets">
+          <app-select v-model:value="modelRef.witgets"  type="witgets" placeholder="请选择部件" />
         </a-form-item>
         <a-form-item label="日期">
           <a-range-picker
@@ -22,7 +22,7 @@
       </template>
     </app-search>
     <a-table
-      :row-key="(record) => record.key"
+      :row-key="(record:any) => record.key"
       :row-selection="{ selectedRowKeys: state.selectedRowKeys, onChange: onSelectChange }"
       :columns="columns"
       :pagination="pagination"
@@ -50,8 +50,13 @@
         </template>
       </template>
     </a-table>
-    <app-modal v-model:modalVisible="modalVisible" :confirmLoading="confirmLoading" @ok="handleOk"  @cancel="handleCancel">
-    11
+    <app-modal
+      v-model:modalVisible="modalVisible"
+      :confirmLoading="confirmLoading"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      11
     </app-modal>
   </div>
 </template>
@@ -60,24 +65,22 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import dayjs, { Dayjs } from 'dayjs'
-import { usePagination } from 'vue-request'
 import { getTableData } from '@/api/table'
+import { Rule } from 'ant-design-vue/es/form'
 type Key = string | number
 type RangeValue = [Dayjs, Dayjs]
 interface DataType {
   id: number
   name: string
-  brand: string
+  turbines: string
   status: string
   date: string
-  store: string
+  witgets: string
 }
 interface FormState {
-  key: Key
   name: string
-  brand: string
-  status: string
-  store: string
+  turbines?: string
+  witgets?: string
   date?: [Dayjs, Dayjs]
 }
 const ranges = {
@@ -90,19 +93,19 @@ const columns = [
     dataIndex: 'name'
   },
   {
-    title: '所属品牌',
-    dataIndex: 'brand'
+    title: '风机',
+    dataIndex: 'turbines'
   },
   {
-    title: '店铺',
-    dataIndex: 'store'
+    title: '部件',
+    dataIndex: 'witgets'
   },
   {
     title: '状态',
     dataIndex: 'status'
   },
   {
-    title: '注册时间',
+    title: '日期',
     dataIndex: 'date'
   },
   {
@@ -118,32 +121,36 @@ const modalVisible = ref(false)
 const state = reactive<{
   selectedRowKeys: Key[]
   formState: FormState
+  rulesState:Record<keyof FormState, Rule[]>
   loading: boolean
 }>({
   selectedRowKeys: [],
   formState: {
-    key: '',
-    brand: '',
     name: '',
-    status: '',
-    store: '',
+    turbines: undefined,
+    witgets: undefined,
     date: undefined
+  },
+  rulesState: {
+    turbines: [{ required: true, message: '请选择风机' }],
+    witgets: [{ required: true, message: '请选择部件' }],
+    name:[],
+    date:[]
   },
   loading: false
 })
 const onSelectChange = (selectedRowKeys: Key[]) => {
-  console.log('selectedRowKeys changed: ', selectedRowKeys)
   state.selectedRowKeys = selectedRowKeys
 }
 const onSearch = () => {
-  const { name, brand, store, date } = state.formState
+  const { name, turbines, witgets, date } = state.formState
   let startDate: string | undefined
   let endDate: string | undefined
   if (date) {
     startDate = date[0].format('YYYY-MM-DD')
     endDate = date[1].format('YYYY-MM-DD')
   }
-  console.log('search', startDate, endDate)
+  console.log('search', name, turbines, witgets, startDate, endDate)
 }
 const onReset = () => {
   console.log('onReset')

@@ -1,8 +1,8 @@
 export interface MockResponseTableData {
   id:number
   name:string
-  brand:string
-  store:string
+  turbines:string
+  witgets:string
   status:string
   date:string
 }
