@@ -3,22 +3,24 @@
  * @Author: taoman
  * @Date: 2023-05-31 14:31:33
  * @LastEditors: taoman
- * @LastEditTime: 2023-06-09 17:14:31
+ * @LastEditTime: 2023-06-25 15:51:34
  */
 import * as THREE from 'three'
 import { onMounted, ref, shallowRef } from 'vue'
 import { debounce, forEach } from 'lodash'
 import { useThree } from './utils'
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid'
 const MODERL_SCALES = <const>[0.0001 * 3, 0.0001 * 3, 0.0001 * 3]
+console.log('+++++', process.env.NODE_ENV)
+const isDev = process.env.NODE_ENV === 'development'
 const MODEL_URL = <const>{
-  SKELETON: '/models/turbine.glb',
-  PLANE: '/models/plane.glb',
-  EQUIPMENT: '/models/equipment.glb'
+  SKELETON: isDev ? '/models/turbine.glb' : '/Vue3-Three/models/turbine.glb',
+  PLANE: isDev ? '/models/plane.glb' : '/Vue3-Three/models/plane.glb',
+  EQUIPMENT: isDev ? '/models/equipment.glb' : '/Vue3-Three/models/equipment.glb'
 }
 const MODEL_SKELETON_ENUM = <const>{
   WireframeMaterial: '线框材质',
-  ColorMaterial: '颜色材质',
+  ColorMaterial: '颜色材质'
 }
 export function useTurbine() {
   const loading = ref(false)
@@ -27,8 +29,18 @@ export function useTurbine() {
   const modelPlane = shallowRef<THREE.Object3D>()
   const modelEquipment = shallowRef<THREE.Object3D>()
 
-  const { container, scene, statsRef,camera, control,renderMixins, loadModels, loadGLTF,loadAnimate ,render} =
-    useThree()
+  const {
+    container,
+    scene,
+    statsRef,
+    camera,
+    control,
+    renderMixins,
+    loadModels,
+    loadGLTF,
+    loadAnimate,
+    render
+  } = useThree()
 
   const loadLights = () => {
     const LIGHT_LIST = [
@@ -37,31 +49,31 @@ export function useTurbine() {
       [100, -100, 100],
       [100, 100, -100]
     ]
-    forEach(LIGHT_LIST,([x,y,z]:number[]) => {
-      const directionalLight = new THREE.DirectionalLight(0xffffff,3)
-      directionalLight.position.set(x,y,z)
+    forEach(LIGHT_LIST, ([x, y, z]: number[]) => {
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 3)
+      directionalLight.position.set(x, y, z)
       scene.value?.add(directionalLight)
     })
   }
   const loadTurbineSkeleton = async () => {
-    const {scene:object,animations} = await loadGLTF(MODEL_URL.SKELETON)
+    const { scene: object, animations } = await loadGLTF(MODEL_URL.SKELETON)
     object.scale.set(...MODERL_SCALES)
-    object.position.set(0,0,0)
+    object.position.set(0, 0, 0)
     loadAnimate(object, animations, animations[0].name)
     object.name = 'skeleton'
     modelSkeleton.value = object
     turbine.add(object)
   }
   const loadTurbinPlane = async () => {
-    const {scene:object} = await loadGLTF(MODEL_URL.PLANE)
+    const { scene: object } = await loadGLTF(MODEL_URL.PLANE)
     object.scale.set(...MODERL_SCALES)
-    object.position.set(0,0,0)
+    object.position.set(0, 0, 0)
     object.name = 'plane'
     modelPlane.value = object
     turbine.add(object)
   }
   const loadTurbinEquipments = async () => {
-    const {scene:object} = await loadGLTF(MODEL_URL.EQUIPMENT)
+    const { scene: object } = await loadGLTF(MODEL_URL.EQUIPMENT)
     object.scale.set(...MODERL_SCALES)
     object.name = 'equipment'
     modelEquipment.value = object
@@ -70,20 +82,20 @@ export function useTurbine() {
   // 风机骨架消隐动画
   const skeletonAnimation = () => {
     const shellModel = modelSkeleton.value?.getObjectByName(MODEL_SKELETON_ENUM.ColorMaterial)
-    const clippingPlane = new THREE.Plane(new THREE.Vector3(0,-1,0),3.5)
-    shellModel?.traverse((mesh)=>{
-      if(!(mesh instanceof THREE.Mesh)) return undefined
+    const clippingPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 3.5)
+    shellModel?.traverse((mesh) => {
+      if (!(mesh instanceof THREE.Mesh)) return undefined
       mesh.material = new THREE.MeshPhysicalMaterial({
-        color:0xffffff,
-        metalness:1,
-        roughness:0.7
+        color: 0xffffff,
+        metalness: 1,
+        roughness: 0.7
       })
       mesh.material.clippingPlanes = [clippingPlane]
       return undefined
     })
     const uid = uuid()
-    renderMixins.set(uid,()=>{
-      if(clippingPlane.constant <= -0.1){
+    renderMixins.set(uid, () => {
+      if (clippingPlane.constant <= -0.1) {
         modelSkeleton.value?.remove(shellModel!)
         renderMixins.delete(uid)
       }
@@ -119,15 +131,11 @@ export function useTurbine() {
     control.value?.update()
 
     loadLights()
-    await loadModels([
-      loadTurbineSkeleton(),
-      loadTurbinPlane(),
-      loadTurbinEquipments()
-    ])
+    await loadModels([loadTurbineSkeleton(), loadTurbinPlane(), loadTurbinEquipments()])
     loading.value = false
     render()
     planeAnimation()
     skeletonAnimation()
   })
-  return { container, scene,statsRef, turbine,loading }
+  return { container, scene, statsRef, turbine, loading }
 }

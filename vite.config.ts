@@ -9,7 +9,7 @@ import ViteImages from 'vite-plugin-vue-images'
 import { viteMockServe } from 'vite-plugin-mock'
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Vue3-Three/',
+  base: process.env.NODE_ENV === 'production' ? '/Vue3-Three/' : '/',
   build: {
     outDir: 'docs'
   },
