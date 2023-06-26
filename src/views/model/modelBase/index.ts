@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2023-05-31 14:31:33
  * @LastEditors: taoman
- * @LastEditTime: 2023-06-25 15:51:34
+ * @LastEditTime: 2023-06-26 10:46:29
  */
 import * as THREE from 'three'
 import { onMounted, ref, shallowRef } from 'vue'
@@ -11,7 +11,6 @@ import { debounce, forEach } from 'lodash'
 import { useThree } from './utils'
 import { v4 as uuid } from 'uuid'
 const MODERL_SCALES = <const>[0.0001 * 3, 0.0001 * 3, 0.0001 * 3]
-console.log('+++++', process.env.NODE_ENV)
 const isDev = process.env.NODE_ENV === 'development'
 const MODEL_URL = <const>{
   SKELETON: isDev ? '/models/turbine.glb' : '/Vue3-Three/models/turbine.glb',

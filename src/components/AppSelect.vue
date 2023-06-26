@@ -3,7 +3,7 @@
     v-model:value="value"
     show-search
     :placeholder="placeholder"
-    style="width: 200px"
+    :style="{width:width+'px'} "
     :options="searchOptions"
     :filter-option="filterOption"
     @change="handleChange"
@@ -15,11 +15,13 @@ import type { SelectProps } from 'ant-design-vue'
 import { ref, watch } from 'vue'
 interface Props {
   value?: string | string[] | number | number[]
+  width:number
   placeholder?: string
   type: string
 }
 const props = withDefaults(defineProps<Props>(), {
   value: undefined,
+  width: 200,
   placeholder: '',
   type: 'turbines'
 })
