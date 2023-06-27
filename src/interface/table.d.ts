@@ -4,6 +4,7 @@ export interface MockResponseTableData {
   turbines:string
   witgets:string
   status:string
+  checked:boolean
   date:string
 }
 

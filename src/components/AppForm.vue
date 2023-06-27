@@ -19,7 +19,7 @@ const layout = {
   wrapperCol: { span: 14 }
 }
 type Props = Record<string, any>
-const props = withDefaults(defineProps<{ modelValue: Props; rules?: Props }>(), {
+const props = withDefaults(defineProps<{ modelValue?: Props; rules?: Props }>(), {
   modelValue: () => ({}),
   rules: () => ({}),
   isSubmit: true

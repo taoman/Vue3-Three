@@ -15,7 +15,7 @@ import type { SelectProps } from 'ant-design-vue'
 import { ref, watch } from 'vue'
 interface Props {
   value?: string | string[] | number | number[]
-  width:number
+  width?:number
   placeholder?: string
   type: string
 }

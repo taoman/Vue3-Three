@@ -13,9 +13,9 @@ import { v4 as uuid } from 'uuid'
 const MODERL_SCALES = <const>[0.0001 * 3, 0.0001 * 3, 0.0001 * 3]
 const isDev = process.env.NODE_ENV === 'development'
 const MODEL_URL = <const>{
-  SKELETON: isDev ? '/models/turbine.glb' : '/Vue3-Three/models/turbine.glb',
-  PLANE: isDev ? '/models/plane.glb' : '/Vue3-Three/models/plane.glb',
-  EQUIPMENT: isDev ? '/models/equipment.glb' : '/Vue3-Three/models/equipment.glb'
+  SKELETON: isDev ? '/models/turbine.glb' : '/vue-admin/models/turbine.glb',
+  PLANE: isDev ? '/models/plane.glb' : '/vue-admin/models/plane.glb',
+  EQUIPMENT: isDev ? '/models/equipment.glb' : '/vue-admin/models/equipment.glb'
 }
 const MODEL_SKELETON_ENUM = <const>{
   WireframeMaterial: '线框材质',

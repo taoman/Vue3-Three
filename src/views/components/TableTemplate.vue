@@ -37,7 +37,10 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'status'">
-          <a-tag color="green">成功</a-tag>
+          <a-tag color="green">{{ record.status }}</a-tag>
+        </template>
+        <template v-if="column.dataIndex === 'isStart'">
+          <a-switch v-model:checked="record.checked" @change="handleSwitch(record)" checked-children="开" un-checked-children="关" />
         </template>
         <template v-if="column.dataIndex === 'operation'">
           <a-tag color="#55acee" @click="edit(record)">
@@ -62,16 +65,19 @@
       @cancel="handleCancel"
     >
       <a-form v-bind="modalFormLayout" :model="state.editFormState">
-        <a-form-item name="name" label="Name">
+        <a-form-item name="name" label="负责人">
           <a-input v-model:value="state.editFormState.name" />
         </a-form-item>
-        <a-form-item name="turbines" label="Turbines">
+        <a-form-item name="turbines" label="风机">
           <app-select
             v-model:value="state.editFormState.turbines"
             :width="315"
             type="turbines"
             placeholder="请选择风机"
           />
+        </a-form-item>
+        <a-form-item name="witgets" label="运行">
+          <a-switch v-model:checked="state.editFormState.checked" checked-children="开" un-checked-children="关" />
         </a-form-item>
       </a-form>
     </app-modal>
@@ -91,6 +97,7 @@ interface DataType {
   name: string
   turbines: string
   status: string
+  checked: boolean
   date: string
   witgets: string
 }
@@ -122,6 +129,10 @@ const columns = [
     dataIndex: 'status'
   },
   {
+    title: '运行',
+    dataIndex: 'isStart'
+  },
+  {
     title: '日期',
     dataIndex: 'date'
   },
@@ -142,7 +153,7 @@ const modalFormLayout = {
 const state = reactive<{
   selectedRowKeys: Key[]
   formState: FormState
-  editFormState: FormState
+  editFormState: Record<string, any>
   rulesState: Record<keyof FormState, Rule[]>
   loading: boolean
 }>({
@@ -156,8 +167,7 @@ const state = reactive<{
   editFormState: {
     name: '',
     turbines: undefined,
-    witgets: undefined,
-    date: undefined
+    checked:false
   },
   rulesState: {
     turbines: [{ required: true, message: '请选择风机' }],
@@ -183,6 +193,9 @@ const onSearch = () => {
 }
 const onReset = () => {
   console.log('onReset')
+}
+const handleSwitch = (record: DataType) => {
+  console.log('record', record)
 }
 const edit = (record: DataType) => {
   console.log('record', record)
