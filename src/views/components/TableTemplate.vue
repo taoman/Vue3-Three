@@ -1,15 +1,20 @@
 <template>
   <div>
-    <app-search v-model="state.formState" :rules="state.rulesState" @search="onSearch" @reset="onReset">
-      <template #formConent="{ modelRef,validateInfos }">
+    <app-search
+      v-model="state.formState"
+      :rules="state.rulesState"
+      @search="onSearch"
+      @reset="onReset"
+    >
+      <template #formConent="{ modelRef, validateInfos }">
         <a-form-item label="负责人">
           <a-input v-model:value="modelRef.name" placeholder="请输入负责人" />
         </a-form-item>
         <a-form-item label="风机" v-bind="validateInfos.turbines">
-          <app-select v-model:value="modelRef.turbines"  type="turbines" placeholder="请选择风机" />
+          <app-select v-model:value="modelRef.turbines" type="turbines" placeholder="请选择风机" />
         </a-form-item>
         <a-form-item label="部件" v-bind="validateInfos.witgets">
-          <app-select v-model:value="modelRef.witgets"  type="witgets" placeholder="请选择部件" />
+          <app-select v-model:value="modelRef.witgets" type="witgets" placeholder="请选择部件" />
         </a-form-item>
         <a-form-item label="日期">
           <a-range-picker
@@ -32,7 +37,10 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'status'">
-          <a-tag color="green">成功</a-tag>
+          <a-tag color="green">{{ record.status }}</a-tag>
+        </template>
+        <template v-if="column.dataIndex === 'isStart'">
+          <a-switch v-model:checked="record.checked" @change="handleSwitch(record)" checked-children="开" un-checked-children="关" />
         </template>
         <template v-if="column.dataIndex === 'operation'">
           <a-tag color="#55acee" @click="edit(record)">
@@ -56,7 +64,22 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
-      11
+      <a-form v-bind="modalFormLayout" :model="state.editFormState">
+        <a-form-item name="name" label="负责人">
+          <a-input v-model:value="state.editFormState.name" />
+        </a-form-item>
+        <a-form-item name="turbines" label="风机">
+          <app-select
+            v-model:value="state.editFormState.turbines"
+            :width="315"
+            type="turbines"
+            placeholder="请选择风机"
+          />
+        </a-form-item>
+        <a-form-item name="witgets" label="运行">
+          <a-switch v-model:checked="state.editFormState.checked" checked-children="开" un-checked-children="关" />
+        </a-form-item>
+      </a-form>
     </app-modal>
   </div>
 </template>
@@ -74,6 +97,7 @@ interface DataType {
   name: string
   turbines: string
   status: string
+  checked: boolean
   date: string
   witgets: string
 }
@@ -105,6 +129,10 @@ const columns = [
     dataIndex: 'status'
   },
   {
+    title: '运行',
+    dataIndex: 'isStart'
+  },
+  {
     title: '日期',
     dataIndex: 'date'
   },
@@ -118,10 +146,15 @@ const total = ref()
 const current = ref(1)
 const pageSize = ref(10)
 const modalVisible = ref(false)
+const modalFormLayout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 16 },
+};
 const state = reactive<{
   selectedRowKeys: Key[]
   formState: FormState
-  rulesState:Record<keyof FormState, Rule[]>
+  editFormState: Record<string, any>
+  rulesState: Record<keyof FormState, Rule[]>
   loading: boolean
 }>({
   selectedRowKeys: [],
@@ -131,14 +164,20 @@ const state = reactive<{
     witgets: undefined,
     date: undefined
   },
+  editFormState: {
+    name: '',
+    turbines: undefined,
+    checked:false
+  },
   rulesState: {
     turbines: [{ required: true, message: '请选择风机' }],
     witgets: [{ required: true, message: '请选择部件' }],
-    name:[],
-    date:[]
+    name: [],
+    date: []
   },
   loading: false
 })
+
 const onSelectChange = (selectedRowKeys: Key[]) => {
   state.selectedRowKeys = selectedRowKeys
 }
@@ -155,8 +194,17 @@ const onSearch = () => {
 const onReset = () => {
   console.log('onReset')
 }
+const handleSwitch = (record: DataType) => {
+  console.log('record', record)
+}
 const edit = (record: DataType) => {
-  // console.log('record', record)
+  console.log('record', record)
+  state.editFormState = {
+    name: record.name,
+    turbines: record.turbines,
+    witgets: record.witgets,
+    date: [dayjs(record.date), dayjs(record.date)]
+  }
   modalVisible.value = true
 }
 const del = (record: DataType) => {
@@ -190,7 +238,8 @@ const handleTableChange = (pag: any) => {
   getData()
 }
 const confirmLoading = ref(false)
-const handleOk = () => {
+const handleOk = async () => {
+  console.log('handleOk', state.editFormState)
   confirmLoading.value = true
   setTimeout(() => {
     modalVisible.value = false

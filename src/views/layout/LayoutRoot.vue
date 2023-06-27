@@ -17,6 +17,7 @@
       </a-layout-header>
       <app-tags />
       <a-layout-content
+      class="layout-content"
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         <AppMain />
@@ -62,6 +63,12 @@ const collapsed = ref<boolean>(false)
 
   .site-layout .site-layout-background {
     background: #fff;
+  }
+  .layout-content{
+    padding: 24px;
+    background: #fff;
+    min-height: 280px;
+    overflow: auto;
   }
 }
 </style>

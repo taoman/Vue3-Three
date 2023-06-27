@@ -1,1 +1,0 @@
-import{d as o,o as t,c as s,p as _,f as c,a,_ as n}from"./index-bb7ab53e.js";const p=e=>(_("data-v-3719cb7b"),e=e(),c(),e),d=p(()=>a("div",{class:"name"}," taoman ",-1)),i=[d],r=o({__name:"AboutView",setup(e){return(u,b)=>(t(),s("section",null,i))}});const m=n(r,[["__scopeId","data-v-3719cb7b"]]);export{m as default};

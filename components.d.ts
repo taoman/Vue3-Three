@@ -28,6 +28,7 @@ declare module '@vue/runtime-core' {
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     AModal: typeof import('ant-design-vue/es')['Modal']
     AppBreadCrumb: typeof import('./src/components/AppBreadCrumb.vue')['default']
+    AppForm: typeof import('./src/components/AppForm.vue')['default']
     AppMenu: typeof import('./src/components/AppMenu.vue')['default']
     AppModal: typeof import('./src/components/AppModal.vue')['default']
     AppSearch: typeof import('./src/components/AppSearch.vue')['default']
@@ -58,6 +59,7 @@ declare module '@vue/runtime-core' {
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }

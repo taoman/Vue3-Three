@@ -8,6 +8,7 @@ for(let i = 1;i<50;i++){
     turbines:`#${i}号风机`,
     witgets:'发动机',
     status:'正常',
+    checked: i % 2 === 0 ? true : false,
     date:'2021-09-01'
   })
 }

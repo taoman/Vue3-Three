@@ -11,16 +11,22 @@
         <component :is="Witgets[item]" v-for="item in chunkModules.right" :key="item"></component>
       </div>
     </div>
+
+    <div v-if="loading" class="loading">
+      <loading-outlined />
+      <span>加载中,请耐心等待...</span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { LoadingOutlined } from '@ant-design/icons-vue'
 import { useTurbine } from './modelBase'
 import { appModelStore } from '@/stores/model-stores'
 import Witgets from './witgets'
 import { storeToRefs } from 'pinia'
 const { chunkModules } = storeToRefs(appModelStore())
-const { container, statsRef } = useTurbine()
+const { loading,container, statsRef } = useTurbine()
 </script>
 
 <style lang="scss" scoped>
