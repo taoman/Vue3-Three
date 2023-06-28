@@ -8,7 +8,7 @@ import 'ant-design-vue/dist/antd.css'
 
 import './assets/main.css'
 import autoscrollDirective from './common/directives/autoscroll'
-import '@/common/http/mock'
+import '@/common/http/mock/base'
 // 引入注册脚本
 import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/SvgIcon.vue'

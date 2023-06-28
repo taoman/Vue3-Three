@@ -24,24 +24,28 @@
 //   ] as MockMethod[]
 // }
 
-import Mock from 'mockjs';
-import {mockTableList} from './table'
-export function mockBaseGet<T extends any[]>(url:string,data:T){
-  return Mock.mock(url,'get',(params) => {
-    const {page,pageSize} = JSON.parse(params.body)
+import Mock from 'mockjs'
+import { mockTableList } from './table'
+import { MockMethod } from 'vite-plugin-mock'
+export function mockBaseGetTable<T extends any[]>(url: string, data: T) {
+  return Mock.mock(url, 'get', (params) => {
+    console.log('params', params)
+    const { page, pageSize } = JSON.parse(params.body)
     const start = (page - 1) * pageSize
     const end = page * pageSize
-    const list = data.slice(start,end)
+    const list = data.slice(start, end)
     return {
-      code:200,
-      message:'success',
-      data:{
+      code: 200,
+      message: 'success',
+      data: {
         list,
-        total:data.length,
+        total: data.length,
         page,
         pageSize
       }
     }
   })
 }
+
 mockTableList()
+// console.log('loginMock',loginMock())

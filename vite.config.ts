@@ -22,7 +22,7 @@ export default defineConfig({
       symbolId: 'icon-[dir]-[name]'
     }),
     viteMockServe({
-      mockPath: '/src/common/http/mock',
+      mockPath: './src/common/http/mock',
       localEnabled: true
     }),
     Components({

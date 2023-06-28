@@ -1,10 +1,5 @@
-export interface MockHttpResponse<T = unknown> {
+export interface HttpResponse<T = unknown> {
   message:string
   code:number
-  data:{
-    list:T
-    total:number
-    page:number
-    pageSize:number
-  }
+  data:T
 }

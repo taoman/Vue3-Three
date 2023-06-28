@@ -14,11 +14,11 @@
         :enter="{
           opacity: 1,
           y: 0,
-          transition:{delay}
+          transition: { delay }
         }"
       >
         <svg-icon class-name="avatar" icon-class="avatar" />
-        <h2>VUEADMIN</h2>
+        <h2>VUE-ADMIN</h2>
         <a-form
           :model="formState"
           name="normal_login"
@@ -27,7 +27,7 @@
           @finishFailed="onFinishFailed"
         >
           <a-form-item name="username" :rules="[{ required: true, message: '请输入账号!' }]">
-            <a-input v-model:value="formState.username" placeholder="账号">
+            <a-input v-model:value="formState.username" placeholder="账号" allowClear>
               <template #prefix>
                 <UserOutlined class="site-form-item-icon" />
               </template>
@@ -35,7 +35,7 @@
           </a-form-item>
 
           <a-form-item name="password" :rules="[{ required: true, message: '请输入密码!' }]">
-            <a-input-password v-model:value="formState.password" placeholder="密码">
+            <a-input-password v-model:value="formState.password" placeholder="密码" allowClear>
               <template #prefix>
                 <LockOutlined class="site-form-item-icon" />
               </template>
@@ -68,6 +68,9 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { useRouter } from 'vue-router'
+import { login } from '@/api/user'
+import {userStore} from '@/stores/user-stores'
 interface FormState {
   username: string
   password: string
@@ -79,8 +82,12 @@ const formState = reactive<FormState>({
   remember: true
 })
 const delay = 200
-const onFinish = (values: any) => {
-  console.log('Success:', values)
+const router = useRouter()
+const user = userStore()
+const onFinish =async (values: any) => {
+  const res = await login(values)
+  user.SET_TOKEN(res.data)
+  router.push('/')
 }
 
 const onFinishFailed = (errorInfo: any) => {
@@ -146,3 +153,4 @@ const disabled = computed(() => {
   }
 }
 </style>
+@/api/user
