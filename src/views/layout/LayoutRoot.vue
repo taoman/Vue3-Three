@@ -7,17 +7,23 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header class="layout-header">
-        <menu-unfold-outlined
-          v-if="collapsed"
-          class="trigger"
-          @click="() => (collapsed = !collapsed)"
-        />
-        <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
-        <app-bread-crumb />
+        <div class="layout-header-bread">
+          <menu-unfold-outlined
+            v-if="collapsed"
+            class="trigger"
+            @click="() => (collapsed = !collapsed)"
+          />
+          <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+          <app-bread-crumb />
+        </div>
+        <div class="logout">
+          <log-out />
+        </div>
+        
       </a-layout-header>
       <app-tags />
       <a-layout-content
-      class="layout-content"
+        class="layout-content"
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         <AppMain />
@@ -40,8 +46,17 @@ const collapsed = ref<boolean>(false)
     background: #fff;
     padding: 0;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
+    &-bread{
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .logout{
+    margin-right: 20px;
   }
   .trigger {
     font-size: 18px;
@@ -64,7 +79,7 @@ const collapsed = ref<boolean>(false)
   .site-layout .site-layout-background {
     background: #fff;
   }
-  .layout-content{
+  .layout-content {
     padding: 24px;
     background: #fff;
     min-height: 280px;

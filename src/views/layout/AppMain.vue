@@ -2,7 +2,7 @@
   <section>
     <RouterView v-slot="{ Component }">
       <template v-if="Component">
-        <Transition mode="out-in">
+        <!-- <Transition mode="out-in"> -->
           <KeepAlive>
             <Suspense>
               <!-- 主要内容 -->
@@ -12,7 +12,7 @@
               <template #fallback> 正在加载... </template>
             </Suspense>
           </KeepAlive>
-        </Transition>
+        <!-- </Transition> -->
       </template>
     </RouterView>
   </section>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import LayoutRoot from '@/views/layout/LayoutRoot.vue'
 import { skuCenter } from './sku'
+import {authManagement} from './auth'
 import { componentsCenter } from './components'
 export const routes: RouteRecordRaw[] = [
   {
@@ -37,7 +38,8 @@ export const routes: RouteRecordRaw[] = [
         }
       },
       // ...skuCenter,
-      ...componentsCenter
+      ...componentsCenter,
+      ...authManagement
     ]
   },
   {

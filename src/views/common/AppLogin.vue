@@ -70,7 +70,7 @@ import { computed, reactive } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/api/user'
-import {userStore} from '@/stores/user-stores'
+import { userStore } from '@/stores/user-stores'
 interface FormState {
   username: string
   password: string
@@ -84,10 +84,11 @@ const formState = reactive<FormState>({
 const delay = 200
 const router = useRouter()
 const user = userStore()
-const onFinish =async (values: any) => {
-  const res = await login(values)
-  user.SET_TOKEN(res.data)
-  router.push('/')
+const onFinish = async (values: any) => {
+  const res = await user.login(values)
+  if (res.code === 200) {
+    router.push('/')
+  }
 }
 
 const onFinishFailed = (errorInfo: any) => {
