@@ -11,7 +11,6 @@ export default [
         code:200,
         data: {
           username: 'admin',
-          // 一个用户可能有多个角色
           roles: ['admin'],
           accessToken: 'eyJhbGciOiJIUzUxMiJ9.admin',
           refreshToken: 'eyJhbGciOiJIUzUxMiJ9.adminRefresh',

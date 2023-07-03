@@ -5,3 +5,4 @@ export interface LoginInterface {
   expires: string;
   accessToken: string;
 }
+

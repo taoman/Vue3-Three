@@ -1,13 +1,15 @@
 import type { RouteRecordRaw } from 'vue-router'
 import RoleManagement from '@/views/auth/RoleManagement.vue'
 import AppMain from '@/views/layout/AppMain.vue'
+import {RouterEnum} from '../enums'
 export const authManagement: RouteRecordRaw[] = [
   {
     path: '/auth',
     name: 'auth',
     component: AppMain,
     meta: {
-      title: '权限管理'
+      title: '权限管理',
+      rank: RouterEnum.auth
     },
     children: [
       {
