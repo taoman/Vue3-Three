@@ -69,8 +69,9 @@
 import { computed, reactive } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
-import { login } from '@/api/user'
 import { userStore } from '@/stores/user-stores'
+import { initRouter } from '@/router/utils';
+// import {usePermissionStoreHook} from '@/stores/permission-stores'
 interface FormState {
   username: string
   password: string
@@ -87,7 +88,9 @@ const user = userStore()
 const onFinish = async (values: any) => {
   const res = await user.login(values)
   if (res.code === 200) {
-    router.push('/')
+    initRouter().then(() => {
+      router.push('/')
+    })
   }
 }
 

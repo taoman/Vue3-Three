@@ -39,7 +39,8 @@ export const constantMenus: RouteRecordRaw[] = [
   }
 ]
  
-constantMenus[0].children?.push(...componentsCenter, ...authManagement)
+// constantMenus[0].children?.push(...componentsCenter, ...authManagement)
+constantMenus[0].children?.push(...componentsCenter)
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes:constantMenus.concat(...remainingRoute)

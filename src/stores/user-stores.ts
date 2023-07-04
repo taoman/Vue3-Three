@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { login } from '@/api/user'
 import { permissionStore } from '@/stores/permission-stores'
-import {getAsyncRoute} from '@/api/user'
 
 interface UserType {
   username: string
@@ -36,15 +35,10 @@ export const userStore = defineStore('user-store', {
       sessionStorage.roles = roles
       this.username = username
     },
-    async getRoute(){
-      const res = await getAsyncRoute()
-      console.log(res.data)
-      sessionStorage.asyncRoutes = JSON.stringify(res.data)
-    },
+    
     async login(data: { username: string; password: string }) {
       const res = await login(data)
       this.SET_TOKEN(res.data)
-      this.getRoute()
       return res
     },
     logOut() {

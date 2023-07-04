@@ -3,6 +3,7 @@ export enum RouterEnum {
   about,
   model,
   components,
-  auth
+  auth,
+  system
 
 }
