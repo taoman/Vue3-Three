@@ -13,7 +13,10 @@ export const permissionStore = defineStore('permission-store', {
   }),
   actions: {
     handleWholeMenus(routes:RouteRecordRaw[]){
+      console.log('constantMenus+++',this.constantMenus)
+
       this.wholeMenus = this.constantMenus[0].children?.concat(routes) ?? []
+      console.log('wholeMenus---',this.wholeMenus)
     }
   }
 })

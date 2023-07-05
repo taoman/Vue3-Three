@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import RoleManagement from '@/views/auth/RoleManagement.vue'
+import RoleManagement from '@/views/auth/AuthManagement.vue'
 import AppMain from '@/views/layout/AppMain.vue'
 import {RouterEnum} from '../enums'
 export const authManagement: RouteRecordRaw[] = [

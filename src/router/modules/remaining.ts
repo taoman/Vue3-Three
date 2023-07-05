@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-export const remainingRoute: RouteRecordRaw[] = [
+export const remainingRouter: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
@@ -9,5 +9,6 @@ export const remainingRoute: RouteRecordRaw[] = [
     path:'/model',
     name:'model',
     component:() => import('@/views/model/ModelIndex.vue')
-  }
+  },
+  
 ]

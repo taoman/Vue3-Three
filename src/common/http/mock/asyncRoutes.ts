@@ -10,8 +10,8 @@ export const authManagement = [
     },
     children: [
       {
-        path: '/auth/roleManagement',
-        name: 'roleManagement',
+        path: '/auth/Management',
+        name: 'AuthManagement',
         meta: {
           title: '角色权限'
         }
