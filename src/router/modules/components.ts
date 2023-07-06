@@ -15,6 +15,7 @@ export const componentsCenter: RouteRecordRaw[] = [
     children: [
       {
         path: '/components/form',
+        name:'componentsForm',
         component: FormTemplate,
         meta: {
           title: '表单组件'
@@ -22,6 +23,7 @@ export const componentsCenter: RouteRecordRaw[] = [
       },
       {
         path: '/components/table',
+        name:'componentsTable',
         component: TableTemplate,
         meta: {
           title: '表格组件'

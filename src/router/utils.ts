@@ -33,6 +33,7 @@ export function initRouter() {
  * @return {*}
  */
 export function handleAsyncRoutes(routeList:RouteRecordRaw[]){
+
   if(routeList.length === 0){
     usePermissionStoreHook().handleWholeMenus(routeList)
   }else{
@@ -69,9 +70,11 @@ export function addAsyncRoutes(arrRoutes: RouteRecordRaw[]) {
         const key = modulesRoutesKeys.find((key) => key.includes(childItem.name as string))
         if (key) {
           childItem.component = modulesRoutes[key]
+
         }
       })
     }
   })
+  
   return arrRoutes
 }

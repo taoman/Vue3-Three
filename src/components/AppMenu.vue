@@ -21,7 +21,7 @@ const router = useRouter()
 const route = useRoute()
 // const menuRoutes = router.options.routes[0]
 const menuRoutes =  usePermissionStoreHook().wholeMenus
-// console.log('menuRoutes', menuRoutes)
+console.log('menuRoutes', menuRoutes)
 const fullPathList = route.path.split('/')
 // console.log('usePermissionStoreHook', usePermissionStoreHook().wholeMenus)
 // const selectedKeys = ref(fullPathList)

@@ -23,6 +23,7 @@
     "echarts": "^5.4.2",
     "lodash": "^4.17.21",
     "pinia": "^2.0.32",
+    "pinia-plugin-persist": "^1.0.0",
     "three": "^0.152.1",
     "tween.js": "^16.6.0",
     "uuid": "^9.0.0",

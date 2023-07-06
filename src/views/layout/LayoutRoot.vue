@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="layout">
+  <a-layout id="layout" v-if="!isModelFullScreen">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo" />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline"> </a-menu>
@@ -19,7 +19,6 @@
         <div class="logout">
           <log-out />
         </div>
-        
       </a-layout-header>
       <app-tags />
       <a-layout-content
@@ -30,13 +29,18 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
+  <div v-if="isModelFullScreen"><ModelOverLay /></div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
 import AppMain from './AppMain.vue'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import { useAppStoreHook } from '@/stores/app-stores'
+import { storeToRefs } from 'pinia'
+import ModelOverLay from '@/views/layout/ModelOverLay.vue'
 const selectedKeys = ref<string[]>(['1'])
 const collapsed = ref<boolean>(false)
+const { isModelFullScreen } = storeToRefs(useAppStoreHook())
 </script>
 <style lang="scss" scoped>
 #layout {
@@ -49,13 +53,13 @@ const collapsed = ref<boolean>(false)
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
-    &-bread{
+    &-bread {
       flex: 1;
       display: flex;
       align-items: center;
     }
   }
-  .logout{
+  .logout {
     margin-right: 20px;
   }
   .trigger {

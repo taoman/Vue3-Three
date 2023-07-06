@@ -5,7 +5,9 @@ import { authManagement } from './modules/auth'
 import { componentsCenter } from './modules/components'
 import { remainingRouter } from './modules/remaining'
 import { cloneDeep } from 'lodash'
-
+import { useAppStoreHook } from '@/stores/app-stores'
+import {usePermissionStoreHook} from '@/stores/permission-stores'
+import { initRouter } from './utils'
 // const modules: Record<string, any> = import.meta.glob(
 //   ['./modules/**/*.ts', '!./modules/**/remaining.ts'],
 //   {
@@ -40,14 +42,33 @@ export const constantRoutes: RouteRecordRaw[] = [
           title: '关于'
         }
       },
+      // {
+      //   path: '/model',
+      //   name: 'model',
+      //   component: () => import('@/views/model/ModelIndex.vue'),
+      //   meta: {
+      //     title: '模型',
+      //     fullScreen: true
+      //   }
+      // },
       {
-        path:'/model',
-        name:'model',
-        component:() => import('@/views/model/ModelIndex.vue'),
+        path: '/model',
+        name: 'model',
+        component: ModelOverLay,
         meta: {
-          title: '模型',
-          fullScreen:true
-        }
+          title: '模型组件'
+        },
+        children: [
+          {
+            path:'/model',
+            name:'model',
+            component: () => import('@/views/model/ModelIndex.vue'),
+            meta: {
+              title: '模型',
+              fullScreen: true
+            },
+          }
+        ]
       },
       ...componentsCenter
     ]
@@ -57,4 +78,28 @@ export const constantMenus = cloneDeep(constantRoutes)
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: constantRoutes.concat(...(remainingRouter as any))
+})
+
+router.beforeEach((to, from, next) => {
+  console.log('to', to)
+  // 这是一种妥协，因为在刷新页面的时候，动态路由会失效指向404
+  // if(!usePermissionStoreHook().wholeMenus.length){
+  //   initRouter().then(()=>{
+  //     next({path:to.path})
+  //   })
+  // }else{
+  //   if (to.meta.fullScreen) {
+  //     useAppStoreHook().isModelFullScreen = true
+  //   } else {
+  //     useAppStoreHook().isModelFullScreen = false
+  //   }
+  //   next()
+  // }
+
+  if (to.meta.fullScreen) {
+    useAppStoreHook().isModelFullScreen = true
+  } else {
+    useAppStoreHook().isModelFullScreen = false
+  }
+  next()
 })

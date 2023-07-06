@@ -10,5 +10,9 @@ export const remainingRouter: RouteRecordRaw[] = [
     name:'model',
     component:() => import('@/views/model/ModelIndex.vue')
   },
-  
+  {
+    path:'/:catchAll(.*)',
+    name:'404',
+    component:() => import('@/views/common/NotFound.vue')
+  }
 ]
