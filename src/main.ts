@@ -14,6 +14,8 @@ import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/SvgIcon.vue'
 
 import { MotionPlugin } from '@vueuse/motion'
+
+
 const pinia = createPinia()
 const app = createApp(App)
 pinia.use(piniaPersist)
@@ -22,6 +24,7 @@ app.use(autoscrollDirective)
 app.use(Antd)
 app.use(MotionPlugin)
 app.component('svg-icon', SvgIcon)
+
 app.use(router)
 
 app.mount('#app')

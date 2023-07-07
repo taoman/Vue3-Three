@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { constantMenus } from '@/router'
 import { RouteRecordRaw } from 'vue-router'
-
+import {filterNoPermissionTree} from '@/router/utils'
 interface PermissionType {
   constantMenus: RouteRecordRaw[]
   wholeMenus: RouteRecordRaw[]
@@ -11,15 +11,15 @@ export const permissionStore = defineStore('permission-store', {
     constantMenus,
     wholeMenus: []
   }),
-  persist: {
-    enabled: true,
-    strategies: [{ storage: sessionStorage, paths: ['wholeMenus'] }]
-  },
+  // persist: {
+  //   enabled: true,
+  //   strategies: [{ storage: sessionStorage, paths: ['wholeMenus'] }]
+  // },
   actions: {
     handleWholeMenus(routes: RouteRecordRaw[]) {
-      this.wholeMenus = this.constantMenus[0].children?.concat(routes) ?? []
-      console.log('this.wholeMenus', this.wholeMenus)
-    }
+      const filterAsyncRoutes = filterNoPermissionTree(routes)
+      this.wholeMenus =this.constantMenus[0].children?.concat(filterAsyncRoutes) ?? []
+    },
   },
   
 })

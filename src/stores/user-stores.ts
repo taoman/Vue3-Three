@@ -28,6 +28,7 @@ export const userStore = defineStore('user-store', {
 
     SET_TOKEN<T extends DataInfo<T>>(data: T) {
       const { accessToken, expires, refreshToken, roles, username } = data
+      console.log('roles',roles)
       sessionStorage.accessToken = accessToken
       sessionStorage.expires = expires
       sessionStorage.refreshToken = refreshToken
@@ -35,7 +36,6 @@ export const userStore = defineStore('user-store', {
       sessionStorage.roles = roles
       this.username = username
     },
-    
     async login(data: { username: string; password: string }) {
       const res = await login(data)
       this.SET_TOKEN(res.data)

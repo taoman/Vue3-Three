@@ -6,14 +6,15 @@ export const authManagement = [
     name: 'auth',
     meta: {
       title: '权限管理',
-      rank: RouterEnum.auth
+      rank: RouterEnum.auth,
     },
     children: [
       {
         path: '/auth/Management',
         name: 'AuthManagement',
         meta: {
-          title: '角色权限'
+          title: '角色权限',
+          roles:['common']
         }
       }
     ]

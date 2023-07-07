@@ -1,8 +1,8 @@
 import { RouteRecordRaw } from 'vue-router'
 import { usePermissionStoreHook } from '@/stores/permission-stores'
 import { getAsyncRoute } from '@/api/user'
-import { router } from "./index";
-import {cloneDeep } from 'lodash'
+import { router } from './index'
+import { cloneDeep } from 'lodash'
 import AppMain from '@/views/layout/AppMain.vue'
 const modulesRoutes = import.meta.glob('/src/views/**/*.{vue,tsx}')
 /**
@@ -32,18 +32,19 @@ export function initRouter() {
  * @param {RouteRecordRaw} routeList
  * @return {*}
  */
-export function handleAsyncRoutes(routeList:RouteRecordRaw[]){
-
-  if(routeList.length === 0){
+export function handleAsyncRoutes(routeList: RouteRecordRaw[]) {
+  if (routeList.length === 0) {
     usePermissionStoreHook().handleWholeMenus(routeList)
-  }else{
-    addAsyncRoutes(routeList)?.map(item=>{
-      if(router.options.routes[0].children?.findIndex(value => value.path === item.path) !== -1){
+  } else {
+    addAsyncRoutes(routeList)?.map((item) => {
+      if (
+        router.options.routes[0].children?.findIndex((value) => value.path === item.path) !== -1
+      ) {
         return
-      }else{
+      } else {
         router.options.routes[0].children?.push(item)
-        if(!router.hasRoute(item.name as string)) router.addRoute(item)
-        const flattrnRouters = router.getRoutes().find(n=> n.path === '/')
+        if (!router.hasRoute(item.name as string)) router.addRoute(item)
+        const flattrnRouters = router.getRoutes().find((n) => n.path === '/')
         router.addRoute(flattrnRouters as RouteRecordRaw)
       }
     })
@@ -55,6 +56,33 @@ export function handleAsyncRoutes(routeList:RouteRecordRaw[]){
 //     if(item){return}
 //   })
 // }
+function hasCommonValue(arr1: [], arr2: []) {
+  return arr1.some((item) => arr2.includes(item))
+}
+export function filterNoPermissionTree(data: RouteRecordRaw[]) {
+  const currentRoles = sessionStorage.roles ?? []
+  console.log('currentRoles', currentRoles)
+  const newTree = cloneDeep(data).filter((item) => {
+    if (item.children && item.children.length > 0) {
+      return item.children.some(childItem => hasCommonValue(childItem.meta?.roles as [],currentRoles))
+      // return item.children.filter((childItem) => {
+      //   if (childItem.meta?.roles) {
+      //     console.log('childrenstatus', childItem)
+      //     return hasCommonValue(childItem.meta?.roles as [], currentRoles)
+      //   } else {
+      //     return true
+      //   }
+      // })
+    } else if (item.meta?.roles) {
+      return hasCommonValue(item.meta?.roles as [], currentRoles)
+    } else {
+      return true
+    }
+  })
+  console.log('newTree', newTree)
+  return data
+}
+
 /**
  * @description: 重新生成路由
  * @param {RouteRecordRaw} arrRoutes
@@ -65,16 +93,15 @@ export function addAsyncRoutes(arrRoutes: RouteRecordRaw[]) {
   const modulesRoutesKeys = Object.keys(modulesRoutes)
   arrRoutes.forEach((item: RouteRecordRaw) => {
     item.component = AppMain
-    if(item.children && item.children.length > 0){
+    if (item.children && item.children.length > 0) {
       item.children.forEach((childItem: RouteRecordRaw) => {
         const key = modulesRoutesKeys.find((key) => key.includes(childItem.name as string))
         if (key) {
           childItem.component = modulesRoutes[key]
-
         }
       })
     }
   })
-  
+
   return arrRoutes
 }
