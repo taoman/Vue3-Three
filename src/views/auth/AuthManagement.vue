@@ -17,6 +17,8 @@
 import { userStore } from '@/stores/user-stores'
 import { ref } from 'vue'
 import type { SelectProps } from 'ant-design-vue'
+import {usePermissionStoreHook}  from '@/stores/permission-stores'
+import {initRouter} from '@/router/utils'
 const user = userStore()
 const username = ref(user.username)
 const options = ref<SelectProps['options']>([
@@ -29,8 +31,18 @@ const options = ref<SelectProps['options']>([
     label: '普通角色'
   }
 ])
-const handleChange = (e: any) => {
-  console.log('value', e)
+const handleChange =async () => {
+  const data = {
+    username:username.value,
+    password:'123456'
+  }
+  const res = await user.login(data)
+  if(res.code === 200){
+    sessionStorage.removeItem('asyncRoutes')
+    usePermissionStoreHook().clearAllCachePage()
+    initRouter()
+  }
+  
 }
 </script>
 

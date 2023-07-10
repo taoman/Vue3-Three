@@ -14,7 +14,6 @@ export const authManagement = [
         name: 'AuthManagement',
         meta: {
           title: '角色权限',
-          roles:['common']
         }
       }
     ]

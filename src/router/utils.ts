@@ -56,31 +56,41 @@ export function handleAsyncRoutes(routeList: RouteRecordRaw[]) {
 //     if(item){return}
 //   })
 // }
+
+/**
+ * @description: 判断两个数组是否存在相同值
+ * @param {*} arr1
+ * @param {*} arr2
+ * @return {*}
+ */
 function hasCommonValue(arr1: [], arr2: []) {
   return arr1.some((item) => arr2.includes(item))
 }
+
+/**
+ * @description: 有roles的则与当前角色进行对比，相同则显示，没有设置roles的默认为全部显示
+ * @param {RouteRecordRaw} data
+ * @return {*}
+ */
 export function filterNoPermissionTree(data: RouteRecordRaw[]) {
   const currentRoles = sessionStorage.roles ?? []
-  console.log('currentRoles', currentRoles)
   const newTree = cloneDeep(data).filter((item) => {
     if (item.children && item.children.length > 0) {
-      return item.children.some(childItem => hasCommonValue(childItem.meta?.roles as [],currentRoles))
-      // return item.children.filter((childItem) => {
-      //   if (childItem.meta?.roles) {
-      //     console.log('childrenstatus', childItem)
-      //     return hasCommonValue(childItem.meta?.roles as [], currentRoles)
-      //   } else {
-      //     return true
-      //   }
-      // })
+      return item.children.some(v => {
+        if(v.meta?.roles){
+          // return item.children?.some(childItem => hasCommonValue(childItem.meta?.roles as [],currentRoles))
+          return hasCommonValue(v.meta.roles as [],currentRoles)
+        }else{
+          return true
+        }
+      })
     } else if (item.meta?.roles) {
       return hasCommonValue(item.meta?.roles as [], currentRoles)
     } else {
       return true
     }
   })
-  console.log('newTree', newTree)
-  return data
+  return newTree
 }
 
 /**

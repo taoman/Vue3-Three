@@ -20,6 +20,10 @@ export const permissionStore = defineStore('permission-store', {
       const filterAsyncRoutes = filterNoPermissionTree(routes)
       this.wholeMenus =this.constantMenus[0].children?.concat(filterAsyncRoutes) ?? []
     },
+
+    clearAllCachePage(){
+      this.wholeMenus = []
+    }
   },
   
 })

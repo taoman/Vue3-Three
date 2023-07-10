@@ -35,6 +35,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const user = userStore()
 const { username, logOut } = user
+console.log('username',username)
 const logout = () => {
   logOut()
   router.push('/login')

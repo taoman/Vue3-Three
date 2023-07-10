@@ -20,6 +20,7 @@ import {usePermissionStoreHook} from '@/stores/permission-stores'
 const route = useRoute()
 // const menuRoutes = router.options.routes[0]
 const menuRoutes =  usePermissionStoreHook().wholeMenus
+console.log('menuRoutes',usePermissionStoreHook().wholeMenus)
 const fullPathList = route.path.split('/')
 // const selectedKeys = ref(fullPathList)
 const openKeys = ref(fullPathList)
