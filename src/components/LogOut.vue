@@ -32,12 +32,12 @@ import {
   DownOutlined
 } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia';
 const router = useRouter()
 const user = userStore()
-const { username, logOut } = user
-console.log('username',username)
+const { username } = storeToRefs(user)
 const logout = () => {
-  logOut()
+  user.logOut()
   router.push('/login')
 }
 const { isFullscreen, toggle } = useFullscreen()

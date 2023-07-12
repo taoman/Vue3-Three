@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="tip">模拟后台根据不同角色返回对应路由，切换角色时注意观察左侧菜单栏，管理员可查看系统管理，普通角色无权限查看</div>
     <div>
       <div class="name">当前角色：{{ username }}</div>
     </div>
@@ -48,6 +49,15 @@ const handleChange =async () => {
 
 <style lang="scss" scoped>
 .name {
+  margin-bottom: 20px;
+}
+.tip{
+  background: #108ee9;
+  color: #fff;
+  padding: 2px 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  border-radius: 5px;
   margin-bottom: 20px;
 }
 </style>

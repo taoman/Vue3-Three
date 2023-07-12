@@ -17,10 +17,11 @@
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {usePermissionStoreHook} from '@/stores/permission-stores'
+import { storeToRefs } from 'pinia';
 const route = useRoute()
 // const menuRoutes = router.options.routes[0]
-const menuRoutes =  usePermissionStoreHook().wholeMenus
-console.log('menuRoutes',usePermissionStoreHook().wholeMenus)
+const {wholeMenus} = storeToRefs(usePermissionStoreHook())
+const menuRoutes =  wholeMenus
 const fullPathList = route.path.split('/')
 // const selectedKeys = ref(fullPathList)
 const openKeys = ref(fullPathList)
