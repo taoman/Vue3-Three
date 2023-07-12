@@ -26,10 +26,8 @@
 
 import Mock from 'mockjs'
 import { mockTableList } from './table'
-import { MockMethod } from 'vite-plugin-mock'
 export function mockBaseGetTable<T extends any[]>(url: string, data: T) {
-  return Mock.mock(url, 'get', (params) => {
-    console.log('params', params)
+  return Mock.mock(url, 'post', (params) => {
     const { page, pageSize } = JSON.parse(params.body)
     const start = (page - 1) * pageSize
     const end = page * pageSize

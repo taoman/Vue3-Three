@@ -11,6 +11,15 @@ import {createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/vue-admin/' : '/',
+  server:{
+    proxy:{
+      '^/api':{
+        target:'http://v.juhe.cn',
+        changeOrigin:true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
+  },
   build: {
     outDir: 'docs'
   },

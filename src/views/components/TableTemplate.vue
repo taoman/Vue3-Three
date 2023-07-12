@@ -216,7 +216,7 @@ const getData = async () => {
     pageSize: pageSize.value
   }
 
-  const res = await getTableData({ data } as any)
+  const res = await getTableData(data)
   dataSource.value = res.data.list
   total.value = res.data.total
   current.value = res.data.page
