@@ -7,4 +7,4 @@
 import http from '@/common/http/request'
 
 export const getTableData = (params: { page: number; pageSize: number }) =>
-  http.get('/table/list',  params)
+  http.post<any>('/table/list',  params)
