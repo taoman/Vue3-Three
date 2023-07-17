@@ -27,7 +27,8 @@
 import Mock from 'mockjs'
 import { mockTableList } from './table'
 export function mockBaseGetTable<T extends any[]>(url: string, data: T) {
-  return Mock.mock(url, 'post', (params) => {
+  const tableMethod = process.env.NODE_ENV === 'production' ? 'get' : 'post'
+  return Mock.mock(url, tableMethod, (params) => {
     const { page, pageSize } = JSON.parse(params.body)
     const start = (page - 1) * pageSize
     const end = page * pageSize

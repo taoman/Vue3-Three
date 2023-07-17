@@ -6,8 +6,9 @@ import axios, {
   CustomParamsSerializer
 } from 'axios'
 import { RequestMethods, HttpRequestConfig } from './type'
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://liquanquan.top/vue-admin-api/api' : '/api'
 const defaultCofig: AxiosRequestConfig = {
-  baseURL: '/api',
+  baseURL,
   timeout: 10000,
 }
 class AxiosWrapper {

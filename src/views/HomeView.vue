@@ -2,14 +2,15 @@
   <div class="content">
     <div class="header">
       <a-card title="今日新闻" style="width: 48%; height: 300px">
-        <a-list item-layout="horizontal" size="small" :data-source="newLists">
+        <a-list v-autoscroll="20" item-layout="horizontal" size="small" :data-source="newLists">
           <template #renderItem="{ item }">
             <a-list-item>
-              <a-list-item-meta
-                :description="item.date"
-              >
+              <a-list-item-meta :description="item.time">
                 <template #title>
-                  <a :href="item.url" target="_blank" >{{ item.title }}</a>
+                  <a :href="item.url" target="_blank">{{ item.title }}</a>
+                </template>
+                <template #avatar>
+                  <a-avatar :src="item.pic" />
                 </template>
               </a-list-item-meta>
             </a-list-item>
@@ -135,9 +136,14 @@ const data1 = [
 ]
 const newLists = ref<NewsType[]>([])
 const init = () => {
-  axios.get<any>('api/toutiao/index?key=f7ea98aac2fa285f5096cc1e764d2306').then((res) => {
-    newLists.value = res.data.result.data
-  })
+  axios
+    .get<any>(
+    '/newsApi/jisuapi/get?channel=头条&num=40&start=0&appkey=da39dce4f8aa52155677ed8cd23a6470'
+  )
+    .then((res) => {
+      console.log('res', res.data)
+      newLists.value = res.data.result.result.list
+    })
 }
 onMounted(() => {
   init()
@@ -159,7 +165,6 @@ onMounted(() => {
       height: 200px;
       overflow: auto;
     }
-   
   }
 }
 </style>

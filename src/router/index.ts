@@ -70,7 +70,8 @@ export const constantRoutes: RouteRecordRaw[] = [
           }
         ]
       },
-      ...componentsCenter
+      ...componentsCenter,
+      ...authManagement
     ]
   }
 ]

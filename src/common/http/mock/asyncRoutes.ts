@@ -1,24 +1,24 @@
 import { MockMethod } from 'vite-plugin-mock'
 import { RouterEnum } from '@/router/enums'
-export const authManagement = [
-  {
-    path: '/auth',
-    name: 'auth',
-    meta: {
-      title: '权限管理',
-      rank: RouterEnum.auth,
-    },
-    children: [
-      {
-        path: '/auth/Management',
-        name: 'AuthManagement',
-        meta: {
-          title: '角色权限',
-        }
-      }
-    ]
-  }
-]
+// export const authManagement = [
+//   {
+//     path: '/auth',
+//     name: 'auth',
+//     meta: {
+//       title: '权限管理',
+//       rank: RouterEnum.auth,
+//     },
+//     children: [
+//       {
+//         path: '/auth/Management',
+//         name: 'AuthManagement',
+//         meta: {
+//           title: '角色权限',
+//         }
+//       }
+//     ]
+//   }
+// ]
 
 export const systemRouter = [
   {
@@ -42,13 +42,13 @@ export const systemRouter = [
 ]
 export default [
   {
-    url: '/api/getRoutes',
+    url:'/api/getRoutes',
     method: 'get',
     response: () => {
       return {
         message: '请求成功',
         code: 200,
-        data: [authManagement,systemRouter]
+        data: [systemRouter]
       }
     }
   }
