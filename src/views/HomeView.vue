@@ -81,6 +81,9 @@
         </a-table>
       </a-card>
     </div>
+    <div class="fot">
+      <home-charts />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -141,7 +144,6 @@ const init = () => {
     '/newsApi/jisuapi/get?channel=头条&num=40&start=0&appkey=da39dce4f8aa52155677ed8cd23a6470'
   )
     .then((res) => {
-      console.log('res', res.data)
       newLists.value = res.data.result.result.list
     })
 }
@@ -165,6 +167,9 @@ onMounted(() => {
       height: 200px;
       overflow: auto;
     }
+  }
+  .fot{
+    margin-top: 20px;
   }
 }
 </style>

@@ -31,7 +31,8 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: 'home',
         component: () => import('@/views/HomeView.vue'),
         meta: {
-          title: '首页'
+          title: '首页',
+          icon: 'home'
         }
       },
       {
@@ -39,24 +40,17 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: 'about',
         component: () => import('@/views/AboutView.vue'),
         meta: {
-          title: '关于'
+          title: '关于',
+          icon: 'about'
         }
       },
-      // {
-      //   path: '/model',
-      //   name: 'model',
-      //   component: () => import('@/views/model/ModelIndex.vue'),
-      //   meta: {
-      //     title: '模型',
-      //     fullScreen: true
-      //   }
-      // },
       {
         path: '/model',
         name: 'model',
         component: ModelOverLay,
         meta: {
-          title: '模型组件'
+          title: '模型组件',
+          icon: 'model'
         },
         children: [
           {
@@ -64,7 +58,8 @@ export const constantRoutes: RouteRecordRaw[] = [
             name: 'model',
             component: () => import('@/views/model/ModelIndex.vue'),
             meta: {
-              title: '模型',
+              title: '风机模型',
+              icon: 'turbine',
               fullScreen: true
             }
           }

@@ -31,7 +31,7 @@ export default defineConfig({
     vue(),
     VueSetupExtend(),
     createSvgIconsPlugin({
-      iconDirs: [fileURLToPath(new URL('./src/assets/imgs/login', import.meta.url))],
+      iconDirs: [fileURLToPath(new URL('./src/assets/imgs/icons', import.meta.url))],
       symbolId: 'icon-[dir]-[name]'
     }),
     viteMockServe({

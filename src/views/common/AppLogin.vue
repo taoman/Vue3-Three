@@ -71,8 +71,6 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
 import { userStore } from '@/stores/user-stores'
 import { initRouter } from '@/router/utils';
-import axios from 'axios';
-// import {usePermissionStoreHook} from '@/stores/permission-stores'
 interface FormState {
   username: string
   password: string
