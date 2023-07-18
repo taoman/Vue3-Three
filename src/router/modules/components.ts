@@ -10,6 +10,7 @@ export const componentsCenter: RouteRecordRaw[] = [
     component: AppMain,
     meta: {
       title: '组件中心',
+      icon: 'components',
       rank: RouterEnum.components
     },
     children: [
@@ -18,7 +19,8 @@ export const componentsCenter: RouteRecordRaw[] = [
         name:'componentsForm',
         component: FormTemplate,
         meta: {
-          title: '表单组件'
+          title: '表单组件',
+          icon: 'form'
         }
       },
       {
@@ -26,7 +28,8 @@ export const componentsCenter: RouteRecordRaw[] = [
         name:'componentsTable',
         component: TableTemplate,
         meta: {
-          title: '表格组件'
+          title: '表格组件',
+          icon: 'table'
         }
       }
     ]

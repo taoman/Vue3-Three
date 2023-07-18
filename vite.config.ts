@@ -9,15 +9,19 @@ import ViteImages from 'vite-plugin-vue-images'
 import { viteMockServe } from 'vite-plugin-mock'
 import {createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // https://vitejs.dev/config/
+const base = process.env.NODE_ENV === 'production' ? '/vue-admin/' : '/'
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/vue-admin/' : '/',
+  base,
+  define:{
+
+  },
   server:{
     proxy:{
-      '^/api':{
-        target:'http://v.juhe.cn',
+      '^/newsApi':{
+        target:'https://way.jd.com',
         changeOrigin:true,
-        rewrite: path => path.replace(/^\/api/, '')
-      }
+        rewrite: path => path.replace(/^\/newsApi/, '')
+      },
     }
   },
   build: {
@@ -27,7 +31,7 @@ export default defineConfig({
     vue(),
     VueSetupExtend(),
     createSvgIconsPlugin({
-      iconDirs: [fileURLToPath(new URL('./src/assets/imgs/login', import.meta.url))],
+      iconDirs: [fileURLToPath(new URL('./src/assets/imgs/icons', import.meta.url))],
       symbolId: 'icon-[dir]-[name]'
     }),
     viteMockServe({

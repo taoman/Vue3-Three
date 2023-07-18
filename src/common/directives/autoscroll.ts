@@ -12,7 +12,6 @@ class AutoScroll {
   }
   startScroll() {
     const { element, step } = this
-    console.log('scrolling',this.scrolling)
     this.timer = setInterval(() => {
       if (element.scrollHeight - element.scrollTop - element.clientHeight < 1) {
         element.scrollTop = 0

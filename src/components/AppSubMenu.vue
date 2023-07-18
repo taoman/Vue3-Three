@@ -2,7 +2,7 @@
   <template v-if="menuInfo.children">
     <a-sub-menu :key="menuInfo.path" :title="menuInfo.meta?.title">
       <template #icon>
-        <MailOutlined />
+        <svg-icon class-name="icon" :icon-class="(menuInfo.meta?.icon as string)" />
       </template>
       <template v-for="item in children" :key="item.path">
         <app-sub-menu :menu-info="item" />
@@ -12,7 +12,7 @@
   <template v-else>
     <a-menu-item :key="menuInfo.path" @click="toPage(menuInfo.path)">
       <template #icon>
-        <MailOutlined />
+        <svg-icon class-name="icon" :icon-class="(menuInfo.meta?.icon as string)" />
       </template>
       {{ menuInfo.meta?.title }}
     </a-menu-item>
@@ -36,4 +36,9 @@ const toPage = (e: string) => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.icon{
+  width: 16px;
+  height: 16px;
+}
+</style>

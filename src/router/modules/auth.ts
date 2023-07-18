@@ -9,6 +9,7 @@ export const authManagement: RouteRecordRaw[] = [
     component: AppMain,
     meta: {
       title: '权限管理',
+      icon: 'auth',
       rank: RouterEnum.auth
     },
     children: [
@@ -17,7 +18,8 @@ export const authManagement: RouteRecordRaw[] = [
         name: 'roleManagement',
         component: RoleManagement,
         meta: {
-          title: '角色权限'
+          title: '角色权限',
+          icon: 'role'
         }
       }
     ]

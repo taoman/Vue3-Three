@@ -13,5 +13,5 @@ for(let i = 1;i<50;i++){
   })
 }
 export function mockTableList(){
-  return mockBaseGetTable<MockResponseTableData[]>('/api/table/list',data)
+  return mockBaseGetTable<MockResponseTableData[]>(`/api/getTableLists`,data)
 }

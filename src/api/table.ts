@@ -1,10 +1,6 @@
-// import axiosMockWrapper from '@/common/http/requestMock'
-// import { MockHttpResponse } from '@/interface'
-// import { MockResponseTableData } from '@/interface/table'
-// export const getTableData = (params: { page: number; pageSize: number }) =>
-//   axiosMockWrapper.get<MockHttpResponse<MockResponseTableData[]>>('/table/list', params)
+
 
 import http from '@/common/http/request'
-
+const tableMethod = process.env.NODE_ENV === 'production' ? 'get' : 'post'
 export const getTableData = (params: { page: number; pageSize: number }) =>
-  http.post<any>('/table/list',  params)
+  http[tableMethod]<any>('/getTableLists',  params)
