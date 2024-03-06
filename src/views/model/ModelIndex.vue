@@ -14,7 +14,7 @@
 
     <div v-if="loading" class="loading">
       <loading-outlined />
-      <span>加载中,请耐心等待...</span>
+      <span>服务器不行，请耐心等待一下...</span>
     </div>
   </div>
 </template>

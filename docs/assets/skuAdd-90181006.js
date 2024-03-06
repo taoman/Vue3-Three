@@ -1,1 +1,0 @@
-import{d as o,$ as n,g as t,b as s}from"./index-3d120acd.js";const l=o({__name:"skuAdd",setup(a){const e=n();return console.log(e.count),(c,p)=>(t(),s("section",null,"skuadd1"))}});export{l as default};
