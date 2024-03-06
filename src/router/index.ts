@@ -4,6 +4,7 @@ import ModelOverLay from '@/views/layout/ModelOverLay.vue'
 import { authManagement } from './modules/auth'
 import { componentsCenter } from './modules/components'
 import { remainingRouter } from './modules/remaining'
+import { webrtcCenter } from './modules/webrtc'
 import { cloneDeep } from 'lodash'
 import { useAppStoreHook } from '@/stores/app-stores'
 import { usePermissionStoreHook } from '@/stores/permission-stores'
@@ -65,6 +66,8 @@ export const constantRoutes: RouteRecordRaw[] = [
           }
         ]
       },
+
+      ...webrtcCenter,
       ...componentsCenter,
       ...authManagement
     ]
@@ -75,7 +78,6 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: constantRoutes.concat(...(remainingRouter as any))
 })
-
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.accessToken
   if (!token && to.path !== '/login') {
@@ -87,7 +89,7 @@ router.beforeEach((to, from, next) => {
         next({ path: to.path })
       })
     } else {
-      // 模型页面需全屏
+      // 页面需全屏
       if (to.meta.fullScreen) {
         useAppStoreHook().isModelFullScreen = true
       } else {

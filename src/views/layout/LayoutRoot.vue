@@ -1,7 +1,7 @@
 <template>
   <a-layout id="layout" v-if="!isModelFullScreen">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo" />
+      <div class="logo">VUE-ADMIN</div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline"> </a-menu>
       <AppMenu />
     </a-layout-sider>
@@ -76,8 +76,16 @@ const { isModelFullScreen } = storeToRefs(useAppStoreHook())
 
   .logo {
     height: 32px;
-    background: rgba(255, 255, 255, 0.3);
+    line-height: 32px;
+    font-weight: 700;
+    text-align: center;
+    font-size: 24px;
+    background: rgba(255,255,255,.3);
+    background-image: -webkit-linear-gradient(top,rgb(135,208,104),orange) ;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin: 16px;
+
   }
 
   .site-layout .site-layout-background {

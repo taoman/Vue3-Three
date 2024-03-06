@@ -14,6 +14,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@antv/x6": "^2.18.1",
+    "@antv/x6-vue-shape": "^2.1.2",
     "@types/three": "^0.152.1",
     "@vueuse/core": "^10.2.1",
     "@vueuse/motion": "^2.0.0",
@@ -29,7 +31,8 @@
     "uuid": "^9.0.0",
     "vue": "^3.3.4",
     "vue-request": "^2.0.3",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
