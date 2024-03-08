@@ -41,7 +41,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: 'about',
         component: () => import('@/views/AboutView.vue'),
         meta: {
-          title: '关于',
+          title: '流程图',
           icon: 'about'
         }
       },

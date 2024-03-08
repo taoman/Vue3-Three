@@ -12,10 +12,8 @@ import {createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 const base = process.env.NODE_ENV === 'production' ? '/vue-admin/' : '/'
 export default defineConfig({
   base,
-  define:{
-
-  },
   server:{
+    port:3000,
     proxy:{
       '^/newsApi':{
         target:'https://way.jd.com',

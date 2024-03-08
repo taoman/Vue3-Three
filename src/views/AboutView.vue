@@ -1,19 +1,12 @@
 <template>
-  <section>
-    
-    <div class="name">
-      taoman
-    </div>
-  </section>
+  <Graph />
 </template>
 
 <script setup lang="ts">
-// import {appStore} from "@/stores/app-stores";
 </script>
 
 <style lang="scss" scoped>
-.name{
-  @include name
+.name {
+  @include name;
 }
-
 </style>

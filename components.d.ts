@@ -57,6 +57,7 @@ declare module '@vue/runtime-core' {
     ATag: typeof import('ant-design-vue/es')['Tag']
     AUpload: typeof import('ant-design-vue/es')['Upload']
     AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
+    Graph: typeof import('./src/components/Graph/index.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeCharts: typeof import('./src/components/HomeCharts.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
