@@ -539,15 +539,18 @@ onMounted(() => {
 .app {
   display: flex;
   width: 100%;
+  height: calc(100vh - 250px);
   padding: 0;
   font-family: sans-serif;
   .app-stencil {
     position: relative;
     width: 200px;
+    height: 100%;
     border: 1px solid #f0f0f0;
   }
   .app-content {
     flex: 1;
+    height: 100%;
     margin-left: 8px;
     box-shadow: 0 12px 5px -10px rgb(0 0 0 / 10%), 0 0 4px 0 rgb(0 0 0 / 10%);
   }
