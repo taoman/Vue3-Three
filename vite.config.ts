@@ -7,19 +7,19 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 import ViteImages from 'vite-plugin-vue-images'
 import { viteMockServe } from 'vite-plugin-mock'
-import {createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // https://vitejs.dev/config/
 const base = process.env.NODE_ENV === 'production' ? '/vue-admin/' : '/'
 export default defineConfig({
   base,
-  server:{
-    port:3000,
-    proxy:{
-      '^/newsApi':{
-        target:'https://way.jd.com',
-        changeOrigin:true,
-        rewrite: path => path.replace(/^\/newsApi/, '')
-      },
+  server: {
+    port: 3000,
+    proxy: {
+      '^/newsApi': {
+        target: 'https://way.jd.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/newsApi/, '')
+      }
     }
   },
   build: {
@@ -37,7 +37,11 @@ export default defineConfig({
       localEnabled: true
     }),
     Components({
-      resolvers: [AntDesignVueResolver()]
+      resolvers: [
+        AntDesignVueResolver({
+          importStyle: false
+        })
+      ]
     }),
     ViteImages({
       dirs: ['src/assets/images']

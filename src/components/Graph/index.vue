@@ -373,7 +373,7 @@ const stencilNode = () => {
     search(cell, keyword) {
       return cell.shape.indexOf(keyword) !== -1
     },
-    placeholder: 'Search by shape name',
+    placeholder: '搜索图形名称',
     notFoundText: 'Not Found',
     collapsable: true,
     stencilGraphHeight: 0,

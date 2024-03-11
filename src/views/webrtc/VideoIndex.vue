@@ -15,7 +15,7 @@
       <div v-for="item in msgArr" :key="item">{{ item }}</div>
     </div>
   </div>
-  <a-modal v-model:visible="visible" title="确认接听吗？" @ok="handleOk"> </a-modal>
+  <a-modal v-model:open="visible" title="确认接听吗？" @ok="handleOk"> </a-modal>
 </template>
 
 <script setup lang="ts">

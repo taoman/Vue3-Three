@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    v-model:visible="visible"
+    v-model:open="visible"
     title="Title"
     :confirm-loading="loading"
     okText="确定"

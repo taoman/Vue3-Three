@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
+import { useForm } from 'ant-design-vue/es/form';
 import { cloneDeep } from 'lodash'
 import { reactive, ref } from 'vue'
-import useForm from 'ant-design-vue/es/form/useForm'
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 14 }

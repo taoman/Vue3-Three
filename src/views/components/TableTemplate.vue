@@ -194,10 +194,10 @@ const onSearch = () => {
 const onReset = () => {
   console.log('onReset')
 }
-const handleSwitch = (record: DataType) => {
+const handleSwitch = (record: any) => {
   console.log('record', record)
 }
-const edit = (record: DataType) => {
+const edit = (record: any) => {
   console.log('record', record)
   state.editFormState = {
     name: record.name,
@@ -207,7 +207,7 @@ const edit = (record: DataType) => {
   }
   modalVisible.value = true
 }
-const del = (record: DataType) => {
+const del = (record: any) => {
   console.log('record', record)
 }
 const getData = async () => {

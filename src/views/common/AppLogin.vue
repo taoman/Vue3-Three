@@ -52,6 +52,7 @@
           <a-form-item>
             <a-button
               :disabled="disabled"
+              :loading="loading"
               type="primary"
               html-type="submit"
               class="login-form-button"
@@ -66,16 +67,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
 import { userStore } from '@/stores/user-stores'
-import { initRouter } from '@/router/utils';
+import { initRouter } from '@/router/utils'
 interface FormState {
   username: string
   password: string
   remember: boolean
 }
+const loading = ref(false)
 const formState = reactive<FormState>({
   username: 'admin',
   password: '123456',
@@ -85,11 +87,13 @@ const delay = 200
 const router = useRouter()
 const user = userStore()
 const onFinish = async (values: any) => {
+  loading.value = true
   const res = await user.login(values)
   if (res.code === 200) {
     initRouter().then(() => {
       router.push('/')
     })
+    loading.value = false
   }
 }
 
@@ -109,6 +113,7 @@ const disabled = computed(() => {
   background-size: cover;
   background-position: center;
   display: flex;
+
   .left,
   .right {
     width: 50%;

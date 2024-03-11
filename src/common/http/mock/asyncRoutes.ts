@@ -26,6 +26,7 @@ export const systemRouter = [
     name: 'system',
     meta: {
       title: '系统管理',
+      icon: 'components',
       rank: RouterEnum.system
     },
     children: [
@@ -33,7 +34,7 @@ export const systemRouter = [
         path: '/system/management',
         name: 'SystemManagement',
         meta: {
-          title: '系统管理',
+          title: '用户管理',
           roles:['admin']
         }
       }
