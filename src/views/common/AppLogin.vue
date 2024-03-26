@@ -90,10 +90,11 @@ const onFinish = async (values: any) => {
   loading.value = true
   const res = await user.login(values)
   if (res.code === 200) {
+    loading.value = false
+
     initRouter().then(() => {
       router.push('/')
     })
-    loading.value = false
   }
 }
 

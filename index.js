@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws'
 
-const wss = new WebSocketServer({ port: 8080 })
+const wss = new WebSocketServer({ port: 8083 })
 wss.on('connection', (ws) => {
   ws.on('message', (data) => {
     wss.clients.forEach((client) => {

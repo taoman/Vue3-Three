@@ -12,6 +12,7 @@
             v-model:value="value"
             placeholder="输入发送内容"
             allow-clear
+            @pressEnter="send"
           />
           <a-button class="btn" type="primary" @click="send">发送</a-button>
         </div>
@@ -26,11 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import { on } from 'events'
 import { onMounted, ref } from 'vue'
 
-// const socket = new WebSocket('wss://liquanquan.top/websocket')
-const socket = new WebSocket('ws://localhost:8080')
+const socket = new WebSocket('wss://liquanquan.top/websocket')
+// const socket = new WebSocket('ws://localhost:8080')
 const msgArr = ref<string[]>([])
 const msgLists = ref<string[]>([])
 const value = ref<string>('')
@@ -54,9 +54,9 @@ const init = () => {
     msgLists.value.push(e.data)
   }
 }
-
 const send = () => {
   socket.send(value.value)
+  value.value = ''
 }
 onMounted(() => {
   init()
@@ -67,6 +67,7 @@ onMounted(() => {
 .chat {
   height: 500px;
   border: 1px solid #ccc;
+  background: #eee;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -82,7 +83,7 @@ onMounted(() => {
       height: 30px;
       line-height: 30px;
       margin-top: 5px;
-      color: skyblue;
+      color: green;
     }
   }
   .send {

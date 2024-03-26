@@ -37,6 +37,15 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
+        path: '/chat',
+        name: 'chat',
+        component: () => import('@/views/chat/index.vue'),
+        meta: {
+          title: '聊天',
+          icon: 'chat'
+        }
+      },
+      {
         path: '/about',
         name: 'about',
         component: () => import('@/views/AboutView.vue'),
@@ -71,15 +80,6 @@ export const constantRoutes: RouteRecordRaw[] = [
       ...componentsCenter,
       ...authManagement
     ]
-  },
-  {
-    path: '/chat',
-    name: 'chat',
-    component: () => import('@/views/chat/index.vue'),
-    meta: {
-      title: '聊天',
-      icon: 'chat'
-    }
   }
 ]
 export const constantMenus = cloneDeep(constantRoutes)
