@@ -4,7 +4,10 @@
       ><div class="chat">
         <div class="message">
           <div class="title">聊天内容</div>
-          <div class="msgItem" v-for="item in msgLists" :key="item">{{ item }}</div>
+          <div class="msgItem" v-for="item in msgLists" :key="item.time">
+            <div class="time">{{ item.time }}</div>
+            <div class="data">{{ item.data }}</div>
+          </div>
         </div>
         <div class="send">
           <a-textarea
@@ -32,7 +35,7 @@ import { onMounted, ref } from 'vue'
 const socket = new WebSocket('wss://liquanquan.top/websocket')
 // const socket = new WebSocket('ws://localhost:8080')
 const msgArr = ref<string[]>([])
-const msgLists = ref<string[]>([])
+const msgLists = ref<{ time: string; data: string }[]>([])
 const value = ref<string>('')
 const message = {
   log(msg: string) {
@@ -51,7 +54,8 @@ const init = () => {
   }
   socket.onmessage = (e) => {
     message.log('来消息了')
-    msgLists.value.push(e.data)
+    const time = new Date().toLocaleString()
+    msgLists.value.push({ time, data: e.data })
   }
 }
 const send = () => {
@@ -81,9 +85,14 @@ onMounted(() => {
     }
     .msgItem {
       height: 30px;
-      line-height: 30px;
-      margin-top: 5px;
-      color: green;
+      margin-top: 20px;
+      .time {
+        color: #272727;
+      }
+      .data {
+        margin-top: 5px;
+        color: green;
+      }
     }
   }
   .send {
