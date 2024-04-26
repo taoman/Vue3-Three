@@ -17,7 +17,21 @@
             allow-clear
             @pressEnter="send"
           />
-          <a-button class="btn" type="primary" @click="send">发送</a-button>
+          <div class="fot">
+            <div>
+              <a-select
+                ref="select"
+                v-model:value="selectValue"
+                style="width: 150px"
+                placeholder="选择聊天方式"
+                @change="handleChange"
+              >
+                <a-select-option value="1">websocket</a-select-option>
+                <a-select-option value="2">sse</a-select-option>
+              </a-select>
+            </div>
+            <a-button class="btn" type="primary" @click="send">发送</a-button>
+          </div>
         </div>
       </div>
     </a-col>
@@ -31,12 +45,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-
-const socket = new WebSocket('wss://liquanquan.top/websocket')
+import { chat } from '@/api/chat'
+const socketRef = ref()
+const sseRef = ref()
 // const socket = new WebSocket('ws://localhost:8080')
 const msgArr = ref<string[]>([])
 const msgLists = ref<{ time: string; data: string }[]>([])
 const value = ref<string>('')
+const selectValue = ref()
 const message = {
   log(msg: string) {
     msgArr.value.push(msg)
@@ -46,24 +62,75 @@ const message = {
   }
 }
 const init = () => {
-  socket.onopen = () => {
+  socketRef.value = new WebSocket('wss://liquanquan.top/websocket')
+  socketRef.value.onopen = () => {
     message.log('websocket连接成功')
   }
-  socket.onerror = () => {
+  socketRef.value.onerror = () => {
     message.error('websocket连接失败！')
   }
-  socket.onmessage = (e) => {
+  socketRef.value.onmessage = (e:any) => {
     message.log('来消息了')
     const time = new Date().toLocaleString()
     msgLists.value.push({ time, data: e.data })
   }
 }
+const sseInit = () => {
+  sseRef.value = new EventSource('http://localhost:3002/api/sse')
+  sseRef.value.onmessage = (e:any) => {
+    const data = e.data && JSON.parse(e.data)
+    if (data.data == 'end') {
+      sseRef.value.close()
+      isEnd.value = true
+    } else {
+      // msgLists.value.push({ time: new Date().toLocaleString(), data: data })
+      renderMessage(data.data)
+    }
+  }
+}
+const chatInit = async () => {
+  const data = {
+    message: value.value
+  }
+  const res = await chat(data)
+  if (res.code == 200) {
+    sseInit()
+  }
+}
 const send = () => {
-  socket.send(value.value)
+  if (selectValue.value == '1') {
+    socketRef.value.send(value.value)
+  } else {
+    chatInit()
+  }
   value.value = ''
 }
+
+const isEnd = ref(true)
+
+
+const renderMessage = (message: string) => {
+  const timestamp = new Date().toLocaleString()
+  if (isEnd.value) {
+    // 如果接收到了完整的消息，添加一条新的消息
+    msgLists.value.push({ time: timestamp, data: message })
+    isEnd.value = false // 改变 isEnd 的状态
+  } else {
+    const index = msgLists.value.length - 1
+    msgLists.value[index].data += message
+  }
+}
+const handleChange = () => {
+  if (selectValue.value == '1') {
+    init()
+  } else {
+    message.log('sse连接成功')
+  }
+}
+
 onMounted(() => {
-  init()
+  // init()
+  // sseInit()
 })
 </script>
 
@@ -100,10 +167,15 @@ onMounted(() => {
     height: 100px;
     // border: 1px solid red;
     position: relative;
-    .btn {
+    .fot {
       position: absolute;
       bottom: 0;
       right: 0;
+      display: flex;
+      align-items: center;
+      .btn {
+        margin-left: 20px;
+      }
     }
   }
 }

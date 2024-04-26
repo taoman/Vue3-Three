@@ -14,6 +14,9 @@
       </div>
     </div>
   </div>
+  <div>
+    {{ chat }}
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -32,6 +35,7 @@ const imgs = [random0, random1, random2, random3, random4, random5]
 const imgUrl = ref()
 const loading = ref(false)
 const text = ref()
+const chat = ref('')
 const getImg = () => {
   randomIndex.value = Math.floor(Math.random() * 6)
   imgUrl.value = imgs[randomIndex.value]
@@ -55,6 +59,7 @@ const init = async (img: any) => {
     console.log('text.value', text.value)
   }
 }
+
 onMounted(() => {
   //   init()
 })
