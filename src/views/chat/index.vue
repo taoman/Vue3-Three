@@ -63,6 +63,7 @@ const message = {
 }
 const init = () => {
   socketRef.value = new WebSocket('wss://liquanquan.top/websocket')
+  // socketRef.value = new WebSocket('ws://localhost:8083')
   socketRef.value.onopen = () => {
     message.log('websocket连接成功')
   }

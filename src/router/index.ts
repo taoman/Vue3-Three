@@ -56,6 +56,15 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
+        path: '/formCreate',
+        name: 'FormCreate',
+        component: () => import('@/views/formCreate/index.vue'),
+        meta: {
+          title: '表单设计器',
+          icon: 'about'
+        }
+      },
+      {
         path: '/model',
         name: 'model',
         component: ModelOverLay,

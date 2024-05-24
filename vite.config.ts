@@ -15,6 +15,11 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
+      '/api': {
+        target: 'https://liquanquan.top/vue-admin-api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/newsApi/, '')
+      },
       '^/newsApi': {
         target: 'https://way.jd.com',
         changeOrigin: true,

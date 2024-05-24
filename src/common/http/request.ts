@@ -1,21 +1,14 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-  CustomParamsSerializer
-} from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { RequestMethods, HttpRequestConfig } from './type'
-// const baseURL = process.env.NODE_ENV === 'production' ? 'https://liquanquan.top/vue-admin-api/api' : '/api'
-const baseURL = import.meta.env.VITE_BASE_URL;
+const baseURL =
+  process.env.NODE_ENV === 'production' ? 'https://liquanquan.top/vue-admin-api/api' : '/api'
+// const baseURL = import.meta.env.VITE_BASE_URL;
 const defaultCofig: AxiosRequestConfig = {
   baseURL,
-  timeout: 10000,
+  timeout: 10000
 }
 class AxiosWrapper {
-  constructor() {
-
-  }
+  constructor() {}
   private static axiosInstance: AxiosInstance = axios.create(defaultCofig)
 
   public request<T>(
@@ -31,9 +24,9 @@ class AxiosWrapper {
     } as HttpRequestConfig
 
     if (method.toLowerCase() === 'get') {
-      config.params = data;
+      config.params = data
     } else {
-      config.data = data;
+      config.data = data
     }
     return new Promise((resolve, reject) => {
       AxiosWrapper.axiosInstance
@@ -46,19 +39,11 @@ class AxiosWrapper {
         })
     })
   }
-  public get<T>(
-    url: string,
-    params?: Record<string, any>,
-    config?: HttpRequestConfig
-  ): Promise<T> {
+  public get<T>(url: string, params?: Record<string, any>, config?: HttpRequestConfig): Promise<T> {
     return this.request<T>('get', url, params, config)
   }
 
-  public post<T>(
-    url: string,
-    data?: Record<string, any>,
-    config?: HttpRequestConfig
-  ): Promise<T> {
+  public post<T>(url: string, data?: Record<string, any>, config?: HttpRequestConfig): Promise<T> {
     return this.request<T>('post', url, data, config)
   }
 }
