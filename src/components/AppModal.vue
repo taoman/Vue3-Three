@@ -16,7 +16,7 @@
 import { ref, watch } from 'vue'
 interface Props {
   modalVisible: boolean
-  confirmLoading: boolean
+  confirmLoading?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   modalVisible: false,

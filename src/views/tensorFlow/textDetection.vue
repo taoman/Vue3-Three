@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import * as tf from '@tensorflow/tfjs'
-import * as MobileNet from '@tensorflow-models/mobilenet'
+// import * as tf from '@tensorflow/tfjs'
+// import * as MobileNet from '@tensorflow-models/mobilenet'
 // import * as wasm from '@tensorflow/tfjs-backend-wasm'
 import random0 from '@/assets/imgs/randomImgs/random0.jpg'
 import random1 from '@/assets/imgs/randomImgs/random1.jpg'
@@ -43,22 +43,22 @@ const getImg = () => {
 const predict = () => {
   init(document.getElementById('img'))
 }
-const init = async (img: any) => {
-  loading.value = true
-  tf.setBackend('cpu')
-  const model = await MobileNet.load()
-  const predictions = await model.classify(img, 5)
-  if (predictions) {
-    loading.value = false
-    text.value = predictions.map((item) => {
-      return {
-        ...item,
-        probability: Math.round(item.probability * 100) + '%'
-      }
-    })
-    console.log('text.value', text.value)
-  }
-}
+// const init = async (img: any) => {
+//   loading.value = true
+//   tf.setBackend('cpu')
+//   const model = await MobileNet.load()
+//   const predictions = await model.classify(img, 5)
+//   if (predictions) {
+//     loading.value = false
+//     text.value = predictions.map((item) => {
+//       return {
+//         ...item,
+//         probability: Math.round(item.probability * 100) + '%'
+//       }
+//     })
+//     console.log('text.value', text.value)
+//   }
+// }
 
 onMounted(() => {
   //   init()

@@ -70,21 +70,22 @@ const init = () => {
   socketRef.value.onerror = () => {
     message.error('websocket连接失败！')
   }
-  socketRef.value.onmessage = (e:any) => {
+  socketRef.value.onmessage = (e: any) => {
     message.log('来消息了')
     const time = new Date().toLocaleString()
     msgLists.value.push({ time, data: e.data })
   }
 }
 const sseInit = () => {
-  sseRef.value = new EventSource('http://localhost:3002/api/sse')
-  sseRef.value.onmessage = (e:any) => {
+  // sseRef.value = new EventSource('http://localhost:3002/api/sse')
+  const sseUrl = import.meta.env.VITE_SSE_URL
+  sseRef.value = new EventSource(sseUrl)
+  sseRef.value.onmessage = (e: any) => {
     const data = e.data && JSON.parse(e.data)
     if (data.data == 'end') {
       sseRef.value.close()
       isEnd.value = true
     } else {
-      // msgLists.value.push({ time: new Date().toLocaleString(), data: data })
       renderMessage(data.data)
     }
   }
@@ -108,7 +109,6 @@ const send = () => {
 }
 
 const isEnd = ref(true)
-
 
 const renderMessage = (message: string) => {
   const timestamp = new Date().toLocaleString()

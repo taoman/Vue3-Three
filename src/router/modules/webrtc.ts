@@ -33,6 +33,26 @@ export const webrtcCenter: RouteRecordRaw[] = [
           fullScreen: true
         }
       },
+      {
+        path:'/webrtc/join',
+        name:'webrtcJoin',
+        component: () => import('@/views/webrtc/join.vue'),
+        meta: {
+          title: '加入房间',
+          icon: 'form',
+          fullScreen: true
+        }
+      },{
+        path:'/webrtc/room',
+        name:'webrtcRoom',
+        component: () => import('@/views/webrtc/room.vue'),
+        meta: {
+          title: '房间',
+          icon: 'form',
+          hidden: true,
+          fullScreen: true
+        }
+      }
     ]
   }
 ]
