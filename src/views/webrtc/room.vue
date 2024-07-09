@@ -6,6 +6,8 @@
       </div>
     </div>
     <div class="right">
+      <a-button type="primary" @click="leaveRoom">离开</a-button>
+
       <div class="videos">
         <video
           v-for="(video, index) in videoList"
@@ -55,7 +57,9 @@ const videoRefs = ref<(HTMLVideoElement | null)[]>([])
 const peerConnections: { [id: string]: RTCPeerConnection } = {}
 const mainVideo = ref<HTMLVideoElement | null>(null)
 const iceCandidateQueue: { [id: string]: RTCIceCandidate[] } = {}
+
 const init = async () => {
+  console.log('socket', socket)
   const stream = await navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
@@ -95,23 +99,9 @@ const init = async () => {
   socket.on('ice-candidate', handleIceCandidate)
   socket.on('userLeft', handleUserLeft)
 }
-// const handleCurrentUsers = async (users: any) => {
-//   users.forEach(async (user: any) => {
 
-//     if (user.id && user.id !== socket.id) {
-//       console.log('添加')
-//       const newUser: User = { name: user.userName, id: user.id }
-//       userList.value.push(newUser)
-
-//       const peerConnection = createPeerConnection(user.id)
-//       peerConnections[user.id] = peerConnection
-//       const offer = await peerConnection.createOffer()
-//       await peerConnection.setLocalDescription(offer)
-//       socket.emit('offer', { roomName: roomName.value, offer, targetId: user.id })
-//     }
-//   })
-// }
 const handleCurrentUsers = async (users: any) => {
+  console.log('当前用户', users)
   for (const user of users) {
     if (user.userId && user.userId !== socket.id) {
       const newUser: User = { name: user.userName, id: user.userId }
@@ -140,14 +130,6 @@ const handleUserJoined = async ({ userId, userName }: any) => {
   userList.value.push(newUser)
 }
 
-// const handleOffer = async ({ offer, from }: any) => {
-//   const peerConnection = createPeerConnection(from)
-//   peerConnections[from] = peerConnection
-//   await peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
-//   const answer = await peerConnection.createAnswer()
-//   await peerConnection.setLocalDescription(answer)
-//   socket.emit('answer', { roomName: roomName.value, answer, targetId: from })
-// }
 const handleOffer = async ({ offer, from }: any) => {
   console.log(`收到offer ${from}`)
   const peerConnection = peerConnections[from] || createPeerConnection(from)
@@ -170,10 +152,6 @@ const handleOffer = async ({ offer, from }: any) => {
     delete iceCandidateQueue[from]
   }
 }
-// const handleAnswer = async ({ answer, from }: any) => {
-//   const peerConnection = peerConnections[from]
-//   await peerConnection.setRemoteDescription(new RTCSessionDescription(answer))
-// }
 
 const handleAnswer = async ({ answer, from }: any) => {
   console.log(`收到应答 ${from}`)
@@ -182,6 +160,7 @@ const handleAnswer = async ({ answer, from }: any) => {
     await peerConnection.setRemoteDescription(new RTCSessionDescription(answer))
   }
 }
+
 const handleIceCandidate = async ({ candidate, from }: any) => {
   console.log(`收集候选人 ${from}`)
   const peerConnection = peerConnections[from]
@@ -206,10 +185,12 @@ const handleUserLeft = ({ userId }: any) => {
     peerConnections[userId].close()
     delete peerConnections[userId]
   }
+  videoList.value = videoList.value.filter((video) => video.user.id !== userId)
 }
 
 const createPeerConnection = (userId: string) => {
   console.log(`创建连接 ${userId}`)
+
   const peerConnection = new RTCPeerConnection({
     iceServers: [
       {
@@ -228,6 +209,7 @@ const createPeerConnection = (userId: string) => {
       })
     }
   }
+
   peerConnection.ontrack = (event) => {
     console.log(`收到远程track ${userId}`)
     const stream = event.streams[0]
@@ -246,12 +228,14 @@ const createPeerConnection = (userId: string) => {
       })
     }
   }
+
   const currentUserStream = userList.value.find((user) => user.id === socket.id)?.stream
   if (currentUserStream) {
     currentUserStream.getTracks().forEach((track) => {
       peerConnection.addTrack(track, currentUserStream)
     })
   }
+
   return peerConnection
 }
 
@@ -263,7 +247,31 @@ const selectUser = (user: User) => {
     mainVideo.value.srcObject = selectedUserVideo.value
   }
 }
-
+const leaveRoom = () => {
+  // socket.emit('leaveRoom', { userId: socket.id, roomName: roomName.value })
+  // handleUserLeft({ userId: socket.id })
+  // socket.disconnect()
+  for (const peerConnection of Object.values(peerConnections)) {
+    peerConnection.close()
+  }
+  
+  // Stop local media tracks
+  const localUser = userList.value.find(user => user.id === socket.id)
+  if (localUser?.stream) {
+    localUser.stream.getTracks().forEach(track => track.stop())
+  }
+  
+  // Notify the server
+  socket.emit('leaveRoom', { userId: socket.id, roomName: roomName.value })
+  
+  // Remove local video element
+  videoList.value = videoList.value.filter(video => video.user.id !== socket.id)
+  
+  // Clean up user list and selected user
+  userList.value = userList.value.filter(user => user.id !== socket.id)
+  selectedUser.value = null
+  selectedUserVideo.value = null
+}
 onMounted(() => {
   init()
 })
@@ -319,4 +327,3 @@ onMounted(() => {
   }
 }
 </style>
-
