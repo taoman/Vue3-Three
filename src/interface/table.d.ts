@@ -1,4 +1,4 @@
-export interface MockResponseTableData {
+export interface DataType {
   id:number
   name:string
   turbines:string
@@ -7,4 +7,3 @@ export interface MockResponseTableData {
   checked:boolean
   date:string
 }
-

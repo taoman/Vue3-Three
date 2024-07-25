@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash'
 import { useAppStoreHook } from '@/stores/app-stores'
 import { usePermissionStoreHook } from '@/stores/permission-stores'
 import { initRouter } from './utils'
-// import { tensorFlow } from './modules/tensorFlow'
+import { tensorFlow } from './modules/tensorFlow'
 // const modules: Record<string, any> = import.meta.glob(
 //   ['./modules/**/*.ts', '!./modules/**/remaining.ts'],
 //   {
@@ -85,7 +85,7 @@ export const constantRoutes: RouteRecordRaw[] = [
           }
         ]
       },
-      // ...tensorFlow,
+      ...tensorFlow,
       ...webrtcCenter,
       ...componentsCenter,
       ...authManagement

@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import {RouterEnum} from '../enums'
 import AppMain from '@/views/layout/AppMain.vue'
 import textDetection from '@/views/tensorFlow/textDetection.vue'
+import indexedDb from '@/views/tensorFlow/indexedDb.vue'
 export const tensorFlow: RouteRecordRaw[] = [
   {
     path: '/tensorFlow',
@@ -19,6 +20,15 @@ export const tensorFlow: RouteRecordRaw[] = [
         component: textDetection,
         meta: {
           title: '文本检测',
+          icon: 'form'
+        }
+      },
+      {
+        path: '/indexedDb',
+        name:'indexedDb',
+        component: indexedDb,
+        meta: {
+          title: '数据库',
           icon: 'form'
         }
       }

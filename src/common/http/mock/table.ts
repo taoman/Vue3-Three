@@ -1,7 +1,7 @@
 import {mockBaseGetTable} from './base'
-import {MockResponseTableData} from '@/interface/table'
-const data:MockResponseTableData[] = []
-for(let i = 1;i<50;i++){
+import {DataType} from '@/interface/table'
+const data:DataType[] = []
+for(let i = 1;i<10000;i++){
   data.push({
     id:i,
     name:`张三${i}`,
@@ -13,5 +13,5 @@ for(let i = 1;i<50;i++){
   })
 }
 export function mockTableList(){
-  return mockBaseGetTable<MockResponseTableData[]>(`/api/getTableLists`,data)
+  return mockBaseGetTable<DataType[]>(`/api/getTableLists`,data)
 }

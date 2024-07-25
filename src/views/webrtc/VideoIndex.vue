@@ -29,6 +29,8 @@ const peer = new RTCPeerConnection()
 const msgArr = ref<string[]>([])
 const visible = ref<boolean>(false)
 const callStarted = ref<boolean>(false)
+const callAccepted = ref<boolean>(false)
+
 const message = {
   log(msg: string) {
     msgArr.value.push(msg)
@@ -92,7 +94,7 @@ const init = () => {
 const startLive = async (offerSdp?: any) => {
   if (target === 'offer') {
     await startCall(offerSdp)
-  } else {
+  } else if (!callAccepted.value) {
     visible.value = true
   }
 }
@@ -133,6 +135,7 @@ const startCall = async (offerSdp?: any) => {
 const handleOk = () => {
   startCall()
   visible.value = false
+  callAccepted.value = true
 }
 const endLive = () => {
   if (localVideo.value.srcObject) {
@@ -154,10 +157,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.title{
-text-align: center;
-font-size: 18px;
-color: #4fbf40;
+.title {
+  text-align: center;
+  font-size: 18px;
+  color: #4fbf40;
 }
 .container {
   width: 100%;

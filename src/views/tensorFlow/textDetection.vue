@@ -17,6 +17,7 @@
   <div>
     {{ chat }}
   </div>
+  <a-button type="primary" @click="submit">请求</a-button>
 </template>
 
 <script setup lang="ts">
@@ -30,6 +31,7 @@ import random3 from '@/assets/imgs/randomImgs/random3.jpg'
 import random4 from '@/assets/imgs/randomImgs/random4.jpg'
 import random5 from '@/assets/imgs/randomImgs/random5.jpg'
 import { onMounted, ref } from 'vue'
+import BestRequest from 'best-request'
 const randomIndex = ref(0)
 const imgs = [random0, random1, random2, random3, random4, random5]
 const imgUrl = ref()
@@ -41,7 +43,7 @@ const getImg = () => {
   imgUrl.value = imgs[randomIndex.value]
 }
 const predict = () => {
-  init(document.getElementById('img'))
+  // init(document.getElementById('img'))
 }
 // const init = async (img: any) => {
 //   loading.value = true
@@ -60,6 +62,27 @@ const predict = () => {
 //   }
 // }
 
+const submit = async () => {
+  const config = {
+    baseURL: 'https://gw.test.bestpay.net/open/1.0/workorder/BizOrderDashboardService',
+    token: '123456',
+    tenantId: '1111',
+    env: {
+      yzfPublicKey:
+        'MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAES3jbgMoQYSD5muAXdn32ymyAC0SBFOCf7KylQliTbz0kEkXCLo7aJ6dRmnId3r3QZRJbc/21o2A51RKm/Z8H3g==',
+      certificateSerial: 'SK59734264476f4636b2bcbd03a56f193b',
+      app_id: '980010000118002',
+      env: 'DEV_XQYFGL741241',
+      sessionKey: ''
+    }
+  }
+  const url = '/queryExistProvinceList'
+  const res = await BestRequest.requestBridge({
+    url,
+    ...config
+  })
+  console.log('res', res)
+}
 onMounted(() => {
   //   init()
 })

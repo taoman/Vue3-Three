@@ -84,23 +84,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="TableTemplate">
 import { ref, reactive, onMounted, computed } from 'vue'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import dayjs, { Dayjs } from 'dayjs'
 import { getTableData } from '@/api/table'
 import { Rule } from 'ant-design-vue/es/form'
+import { DataType } from '@/interface/table'
+import { appStore } from '@/stores/app-stores'
+const app = appStore()
 type Key = string | number
 type RangeValue = [Dayjs, Dayjs]
-interface DataType {
-  id: number
-  name: string
-  turbines: string
-  status: string
-  checked: boolean
-  date: string
-  witgets: string
-}
 interface FormState {
   name: string
   turbines?: string
@@ -218,6 +212,9 @@ const getData = async () => {
 
   const res = await getTableData(data)
   dataSource.value = res.data.list
+  // console.log('app.getTableData',app.getTableData.length)
+  // dataSource.value = app.getTableData
+  // total.value = app.getTableData.length
   total.value = res.data.total
   current.value = res.data.page
   pageSize.value = res.data.pageSize

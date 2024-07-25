@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, nextTick } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { io } from 'socket.io-client'
 
 interface RouteQuery {
@@ -44,6 +44,7 @@ interface User {
 }
 
 const route = useRoute()
+const router = useRouter()
 const routeQuery = route.query as unknown as RouteQuery
 const roomName = ref(routeQuery.roomName)
 const userName = ref(routeQuery.userName)
@@ -271,6 +272,7 @@ const leaveRoom = () => {
   userList.value = userList.value.filter(user => user.id !== socket.id)
   selectedUser.value = null
   selectedUserVideo.value = null
+  router.back()
 }
 onMounted(() => {
   init()
