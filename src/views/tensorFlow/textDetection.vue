@@ -73,7 +73,7 @@ const submit = async () => {
       certificateSerial: 'SK59734264476f4636b2bcbd03a56f193b',
       app_id: '980010000118002',
       env: 'DEV_XQYFGL741241',
-      sessionKey: ''
+      // sessionKey: ''
     }
   }
   const url = '/queryExistProvinceList'
@@ -82,6 +82,44 @@ const submit = async () => {
     ...config
   })
   console.log('res', res)
+  // const data = {
+  //   api: {
+  //     dome: 2,
+  //     name: 'doTtsWithCache',
+  //     operationType: 'com.bestpay.cs.msgpusher.api.DigitalHumanService#doTtsWithCache'
+  //   },
+  //   params: {
+  //     messages: [
+  //       {
+  //         text: '<div>3&lt;MarkTwo&gt;123&lt;/MarkTwo&gt;</div>',
+  //         textStyle: 'RICH_TXT'
+  //       },
+  //       {
+  //         text: '<div>123<a title="2222" href="0">232323</a></div>',
+  //         textStyle: 'RICH_TXT'
+  //       }
+  //     ]
+  //   },
+  //   option: {
+  //     headers: {
+  //       authSsuCode: '8901010699000060',
+  //       authorization:
+  //         'H5:831340eed84c6006171f716f3f1285006acc40221fdf248dc59fe79103820b6c9f307bf21d8898a396511995b35aaf1558f62bed5e55c38edc53cc42cfe44fd4c81dc6052d14b614b80a2fad04e8ebc3100a6a51cea7e6a815e3e7fb08b179c197642b8fca6102be9c7a6a4a4cab5161',
+  //       'event-context': {
+  //         ipTId: '890120060000039060403300',
+  //         tntId: '0101',
+  //         ipRId: '890110060000034390403302',
+  //         env: 'DEV_XQYFGL66486'
+  //       },
+  //       sessionKey: '19c87793113c564551c0d3b6b705f2f4'
+  //     }
+  //   },
+  //   baseParams: {
+  //     // requestEnv:'prod',
+  //     appType: '60'
+  //   }
+  // }
+  // const res = await BestRequest.requestMgs({...data})
 }
 onMounted(() => {
   //   init()
