@@ -41,6 +41,7 @@ declare module '@vue/runtime-core' {
     AppSelect: typeof import('./src/components/AppSelect.vue')['default']
     AppSubMenu: typeof import('./src/components/AppSubMenu.vue')['default']
     AppTags: typeof import('./src/components/AppTags.vue')['default']
+    AProgress: typeof import('ant-design-vue/es')['Progress']
     ARadio: typeof import('ant-design-vue/es')['Radio']
     ARadioButton: typeof import('ant-design-vue/es')['RadioButton']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']

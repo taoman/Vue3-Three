@@ -1,7 +1,7 @@
 import {mockBaseGetTable} from './base'
 import {DataType} from '@/interface/table'
 const data:DataType[] = []
-for(let i = 1;i<10000;i++){
+for(let i = 0;i<100000;i++){
   data.push({
     id:i,
     name:`张三${i}`,
