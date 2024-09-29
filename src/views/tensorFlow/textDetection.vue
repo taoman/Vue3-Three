@@ -65,21 +65,27 @@ const predict = () => {
 const submit = async () => {
   const config = {
     baseURL: 'https://gw.test.bestpay.net/open/1.0/workorder/BizOrderDashboardService',
-    token: '123456',
-    tenantId: '1111',
+    token:
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmVUaW1lIjoxNzI3NDAyODYxLCJ0ZW5hbnRJZCI6IjEyMyIsInVzZXJOYW1lIjoiZ3VhbmxpeXVhbjEiLCJqdGkiOiIxOTY0MWRkMi1mYjE0LTQ1MTYtYThkMS1iODJhYWViOWMxZmYifQ.UcLhkiUaVmLh5lSPCoGnH0cWJnm3UdsR0Fvhmo40B1E',
+    tenantId: '0',
+
     env: {
       yzfPublicKey:
         'MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAES3jbgMoQYSD5muAXdn32ymyAC0SBFOCf7KylQliTbz0kEkXCLo7aJ6dRmnId3r3QZRJbc/21o2A51RKm/Z8H3g==',
       certificateSerial: 'SK59734264476f4636b2bcbd03a56f193b',
       app_id: '980010000118002',
-      env: 'DEV_XQYFGL741241',
-      // sessionKey: ''
+      env: 'SIT_2024092601',
+      sessionKey: ''
     }
   }
-  const url = '/queryExistProvinceList'
+  const url = '/orderTypeStaticsGraph'
   const res = await BestRequest.requestBridge({
     url,
-    ...config
+    ...config,
+    data: {
+      startTime: '2024-06-27',
+      endTime: '2024-09-26'
+    }
   })
   console.log('res', res)
   // const data = {
