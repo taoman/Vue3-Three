@@ -1,12 +1,7 @@
 <template>
-  <!-- <div style="display: flex">
-    <div>1</div>
-    <div style="margin-left: 10px">2</div>
-  </div> -->
-
   <div style="margin-bottom: 10px">
     <a-button type="primary" @click="random">随机生成高亮点</a-button>
-    <a-button type="primary" @click="start">开始</a-button>
+    <a-button type="primary" @click="start" style="margin: 0 20px;">开始</a-button>
     <a-button type="primary" @click="restart">重新开始</a-button>
   </div>
 
@@ -32,6 +27,7 @@ const obstacleIndices = ref<number[]>([])
 const pathIndices = ref<number[]>([])
 const characterPosition = ref({ x: 0, y: 0 })
 const grid = ref(Array.from({ length: 10 }, () => Array(10).fill(1)))
+let timer: any // 添加计时器变量
 const getCoordinates = (index: number) => {
   const row = Math.floor(index / 10)
   const col = index % 10
@@ -64,6 +60,10 @@ const restart = () => {
   pathIndices.value = []
   characterPosition.value = { x: 0, y: 0 }
   grid.value = Array.from({ length: 10 }, () => Array(10).fill(1))
+  if (timer !== null) {
+    clearTimeout(timer)
+    timer = null // 重置计时器引用
+  }
 }
 const start = () => {
   const graph = new Graph(grid.value)
@@ -100,7 +100,7 @@ const animateCharacter = (path: any[]) => {
     console.log('characterPosition', characterPosition.value)
 
     index++
-    setTimeout(move, 500) // 每 500ms 移动一次
+    timer = setTimeout(move, 500) // 每 500ms 移动一次
   }
   move()
 }
