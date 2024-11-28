@@ -1,7 +1,7 @@
 <template>
   <div style="margin-bottom: 10px">
     <a-button type="primary" @click="random">随机生成高亮点</a-button>
-    <a-button type="primary" @click="start" style="margin: 0 20px;">开始</a-button>
+    <a-button type="primary" @click="start" style="margin: 0 20px">开始</a-button>
     <a-button type="primary" @click="restart">重新开始</a-button>
   </div>
 
@@ -26,28 +26,35 @@ import { message } from 'ant-design-vue'
 const obstacleIndices = ref<number[]>([])
 const pathIndices = ref<number[]>([])
 const characterPosition = ref({ x: 0, y: 0 })
+// 所有点设置为1
 const grid = ref(Array.from({ length: 10 }, () => Array(10).fill(1)))
 let timer: any // 添加计时器变量
+// 在页面上显示当前坐标
 const getCoordinates = (index: number) => {
   const row = Math.floor(index / 10)
   const col = index % 10
   return `${row},${col}`
 }
+// 障碍点设置样式
 const isObstacle = (index: number) => {
   return obstacleIndices.value.includes(index)
 }
+// 可通过点的样式
 const isPath = (index: number) => {
   return pathIndices.value.includes(index) // 判断该点是否在路径上
 }
 
+// 从98个点里随机生成30个障碍点
 const random = () => {
   obstacleIndices.value = []
   while (obstacleIndices.value.length < 30) {
     const randomIndex = Math.floor(Math.random() * 98) + 1
+    // 不包括起点和终点
     if (!obstacleIndices.value.includes(randomIndex) && randomIndex !== 0 && randomIndex !== 99) {
       obstacleIndices.value.push(randomIndex)
     }
   }
+  // 将障碍点的坐标转换为对应的索引，并将障碍点设置成0
   for (const index of obstacleIndices.value) {
     const row = Math.floor(index / 10)
     const col = index % 10
@@ -55,6 +62,7 @@ const random = () => {
   }
   console.log('grid', grid.value)
 }
+// 重新开始初始化
 const restart = () => {
   obstacleIndices.value = []
   pathIndices.value = []
@@ -66,12 +74,15 @@ const restart = () => {
   }
 }
 const start = () => {
+  // 将处理好的二维数组(可通过点为1,不可通过为0)转换为Graph对象
+  // { diagonal: true } 表示是否允许斜向移动
   const graph = new Graph(grid.value)
   console.log('开始', graph)
-
+  // 起点和终点
   const start = graph.grid[0][0]
   const end = graph.grid[9][9]
-  const result = astar.search(graph, start, end, { heuristic: astar.heuristics.diagonal })
+  // heuristic 启发函数
+  const result = astar.search(graph, start, end)
   console.log('result', result)
   if (!result.length) {
     return message.error('没有路径')
