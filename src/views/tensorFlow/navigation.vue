@@ -3,6 +3,7 @@
     <a-button type="primary" @click="random">随机生成高亮点</a-button>
     <a-button type="primary" @click="start" style="margin: 0 20px">开始</a-button>
     <a-button type="primary" @click="restart">重新开始</a-button>
+    <span style="margin-left: 20px">是否允许斜向移动: <a-switch v-model:checked="checked" /></span>
   </div>
 
   <div class="container">
@@ -22,7 +23,7 @@ import { computed, onMounted, ref } from 'vue'
 // @ts-ignore
 import { Graph, astar } from 'javascript-astar'
 import { message } from 'ant-design-vue'
-
+const checked = ref<boolean>(false)
 const obstacleIndices = ref<number[]>([])
 const pathIndices = ref<number[]>([])
 const characterPosition = ref({ x: 0, y: 0 })
@@ -76,7 +77,7 @@ const restart = () => {
 const start = () => {
   // 将处理好的二维数组(可通过点为1,不可通过为0)转换为Graph对象
   // { diagonal: true } 表示是否允许斜向移动
-  const graph = new Graph(grid.value)
+  const graph = new Graph(grid.value, { diagonal: checked.value })
   console.log('开始', graph)
   // 起点和终点
   const start = graph.grid[0][0]
