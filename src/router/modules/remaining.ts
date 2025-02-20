@@ -6,13 +6,18 @@ export const remainingRouter: RouteRecordRaw[] = [
     component: () => import('@/views/common/AppLogin.vue')
   },
   {
-    path:'/model',
-    name:'model',
-    component:() => import('@/views/model/ModelIndex.vue')
+    path: '/model',
+    name: 'model',
+    component: () => import('@/views/model/ModelIndex.vue')
   },
   {
-    path:'/:catchAll(.*)',
-    name:'404',
-    component:() => import('@/views/common/NotFound.vue')
+    path: '/resizable',
+    name: 'resizable',
+    component: () => import('@/views/Resizable.vue')
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: '404',
+    component: () => import('@/views/common/NotFound.vue')
   }
 ]

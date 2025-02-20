@@ -90,7 +90,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       ...componentsCenter,
       ...authManagement
     ]
-  }
+  },
 ]
 export const constantMenus = cloneDeep(constantRoutes)
 export const router = createRouter({
@@ -99,7 +99,7 @@ export const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.accessToken
-  if (!token && to.path !== '/login') {
+  if (!token && to.path !== '/login' && to.path !== '/resizable') {
     next('/login')
   } else {
     // 这是一种妥协，因为在刷新页面的时候，动态路由会失效指向404

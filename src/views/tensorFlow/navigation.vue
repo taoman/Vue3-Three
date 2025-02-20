@@ -17,16 +17,19 @@
     <div class="character" :style="characterStyle"></div>
   </div>
 </template>
-
+<!-- A* 算法通过结合 g（实际代价）和 h（启发式估算代价）来选择下一个最优的节点进行扩展。
+f = g + h 是 A* 算法的核心公式，用于评估节点的优先级。
+通过优先队列（BinaryHeap）来高效地选择最小 f 值的节点。
+最终返回从起始节点到目标节点的最短路径，或者返回最接近目标的路径 -->
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 // @ts-ignore
 import { Graph, astar } from 'javascript-astar'
 import { message } from 'ant-design-vue'
 const checked = ref<boolean>(false)
-const obstacleIndices = ref<number[]>([])
-const pathIndices = ref<number[]>([])
-const characterPosition = ref({ x: 0, y: 0 })
+const obstacleIndices = ref<number[]>([]) //障碍物的坐标集合
+const pathIndices = ref<number[]>([]) // 路径点的坐标集合
+const characterPosition = ref({ x: 0, y: 0 }) // 当前坐标
 // 所有点设置为1
 const grid = ref(Array.from({ length: 10 }, () => Array(10).fill(1)))
 let timer: any // 添加计时器变量
