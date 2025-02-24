@@ -18,6 +18,8 @@ import formCreate from '@form-create/element-ui'
 import FcDesigner from '@form-create/designer'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import VueResizeable from 'vue-resizeable'
+import 'vue-resizeable/style.css'
 const pinia = createPinia()
 const app = createApp(App)
 pinia.use(piniaPersist)
@@ -30,5 +32,5 @@ app.component('svg-icon', SvgIcon)
 app.use(formCreate)
 app.use(FcDesigner)
 app.use(router)
-
+app.use(VueResizeable)
 app.mount('#app')
