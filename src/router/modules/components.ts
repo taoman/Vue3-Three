@@ -3,6 +3,7 @@ import {RouterEnum} from '../enums'
 import AppMain from '@/views/layout/AppMain.vue'
 import FormTemplate from '@/views/components/FormTemplate.vue'
 import TableTemplate from '@/views/components/TableTemplate.vue'
+import VirtualList from '@/views/components/VirtualList.vue'
 export const componentsCenter: RouteRecordRaw[] = [
   {
     path: '/components',
@@ -29,6 +30,15 @@ export const componentsCenter: RouteRecordRaw[] = [
         component: TableTemplate,
         meta: {
           title: '表格组件',
+          icon: 'table'
+        }
+      },
+      {
+        path: '/components/virtualList',
+        name:'virtualList',
+        component: VirtualList,
+        meta: {
+          title: '虚拟列表',
           icon: 'table'
         }
       }
